@@ -1,111 +1,227 @@
-# 东软微报修组件
+# 前端代码规范
+1 
+修改前
+```js
+<text v-if="index==current_index" style="border-bottom-color: #47a7ff;border-bottom-width: 2px; border-style: solid;padding-bottom: 10rpx; color: #000000; font-size: 28rpx;">{{ title.name }}</text>
+```
+修改后
+```js
+ :class="index==current_index &&'title-color'"
+```
+2,数组和对象接收值时需要加上（[]）
+修改前
+```js
+titleList: {
+		type: Array,
+		default: () => []
+	},
+```
+修改后
+```js
+titleList: {
+		type: Array,
+		default: () => ([])
+	},
+```
 
-## dr-table
-:::tip
- 表格高级组件 分为search opera table pager区进行维护
-:::
+3判断语句
+修改前
+```js
+switch (this.current_index) {
+					case 2:
+						this.$emit('selectChange', 'strategyShow')
+						break;
+					case 3:
+						this.$emit('selectChange', 'dynamicShow')
+						break;
+					case 4:
+						this.$emit('selectChange', 'driveFriendShow')
+						break;
+				}
+```
+修改后
+```js
+const selectShow={
+					2:'strategyShow',
+					3:'dynamicShow',
+					4:'driveFriendShow'
+				}
+				this.$emit('selectChange',selectShow[this.current_index])
+				
+```
+修改前
+路由携参
+```js
+		if (this.attractions == 'friendsdestination') {
+					_router.push({
+						path: "/foundfriend/FoundFriend",
+						query: {
+							attractions_id: item.id,
+							address: item.address
 
+						}
 
-### 参数说明
-参数|说明|类型|可选|默认值|混入是否存在|
---|--|--|--|--|--|
-pagination | 是否显示分页组件 | boolean | - | true|1
-columns | 配置项 查看columns说明 | Array | - | []|0
-dataSource| 同el-table data | Array | - | []|1
-align | 表格对齐方式 0 左 1 中 2 右 | Number | 0 1 2 | 1 |0
-loading | 表格loading | boolean | - | false |1
-total | 分页总数 分页为false可不传 | number | - | 0|1
-size | 每一页数量 分页为false可不传 | number | - | 15|1
-tableHeightFixed | 是否对表格进行区域式滑动 | boolean | - | true|0
-。。。| 其他参数el-table所有参数 |。。。|。。。|。。。| 0
+					});
+				} else {
+					_router.push({
+						path: "/strategy/Perfect",
+						query: {
+							attractions_id: item.id,
+							address: item.address
 
-### 事件
-事件名|说明|参数|
---|--|--|
-。。。| el-table所有事件|。。。
+						}
 
-### columns说明
-参数|说明|
---|--|
-dataIndex | 字段标识
-label | 标题
-config | 对象与el-table-column配置相同（扩展）
-slots | 插槽配置
+					});
+				}
+```
+修改后
+```js
+const query = {
+					attractions_id: item.id,
+					address: item.address
+				}
+				_router.push({
+					path: this.attractions === 'friendsdestination' ? '/foundfriend/FoundFriend' : '/strategy/Perfect',
+					query
+				})
+```
 
-### 插槽
-name|说明|
---|--|
-search| 搜索区域 使用el-form => el-row 进行使用保证响应式布局
-opera | 按钮操作区域 使用el-button组进行操作
-[...item...]| 基于columns dataIndex进行插槽
+修改后
+```js
+	handleSubmit(key) {
+				console.log("key",key)
+				apiList[key === 1 ? 'apiUserPortalEnterpriseCreate' : 'apiUserPortalEnterpriseResubmit']({ ...this.business_information})
+					.then(res => {
+						if (res.code == 200) {
+							this.getApiUserPortalEnterpriseGetByToken()
+							this.authentication = false
+							this.authenticating = true
+						}
+						 else {
+							showToast(res.msg)
+						}
+					})
+			},
+//上传图片，传入对应的key
+    handleChooseImage(key) {
+				chooseImage().then(res => {
+					this.business_information[key] = res;
+				});
+			},
+```
 
-## BaseTableMixin
-:::tip
-配合组件进行混入使用 减少翻页 查询 新增 修改 删除 启用一系列重复操作
-:::
+校验
+方法一：
+Object.entries()方法返回键值对数组
+every()  方法数组内的所有元素是否都能通过返回boolean
+如何满足进行Axios请求，不满足弹出错误message
+```js
+err_state(state) {
+				console.log("state",state)
+				switch (state) {
+					case "company_name":
+						return "请输入企业名称";
+					case "social_credit_code":
+						
+						return "请输入统一社会信用代码";
+					default:
+				
+				}
+			},
+	let check_array = Object.entries({ ...this.business_information
+					});
+					let check_all = check_array.every((elem) => {
+						return elem[1];
+					});
+					console.log("check_all", check_all)
+					if (check_all) {
+						console.log("**********")
+						this.handleSubmit(this.examine == 1 ? 1 : 2)
+					} else {
+						for (let i = 0; i < check_array.length; i++) {
+							if (!check_array[i][1]) {
+								console.log("错误")
+							
+								this.$message.error(this.err_state(check_array[i][0]));
+								break;
+							}
+						}
+					}
+```
+方法二：
+valid.js
+接收两个参数，vm第一个表单值 rules第二个检验规则
+```js
+const validateToast = (vm, rules) => {
+	return new Promise((resolve, reject) => {
+		Object.keys(rules).forEach((key) => {
+			const segments = key.split('.')
+			const item = rules[key]
+			item.forEach((ruleItem) => {
+				const value = segments.reduce((total, item) => total && total[item], vm)
+				// 必填
+				if (ruleItem.required && !value) {
+					reject(ruleItem.message)
+				}
+				// 正则
+				if (ruleItem.pattern && !ruleItem.pattern.test(value)) {
+					reject(ruleItem.message)
+				}
+			})
+		})
+		resolve(true)
+	})
+}
+export {
+	validateToast
+}
 
-使用必配置参数
-值|说明|类型|
---|--|--|--|
-commandList|查询table command|string
-commandChange| 启用 停用 command| string
-commandDel| 删除 使用接口 command | string
-formPath| 跳转连接 携带id会以编辑状态 查询表单| string
-copyName| 赋值路由name 会携带params| string
-
-data参数
-值|说明|类型|默认值|可重写|
---|--|--|--|--|
-firstLoad|是否在组件mounted时进行table请求|boolean|true|1
-dataSource|当前页表数据|Array|[]|1
-tableLoading|table表格加载|boolean|false|1
-page|当前页|number|1|0
-size|每页数量|number|15|0
-searchForm|查询form 携带的参数可以重写初始化|object|{}|1
-initSearchForm|初始化表格时使用会在表格每一次查询时携带 重置的时候不会重置该参数|object|{}|1
-
-methods
-name|说明|参数|返回值|可重写|
---|--|--|--|--|
-handleToggleLoading| toggle loading | boolean = true | - | 0
-handleResetTable|重置按钮 重置searchForm的值|-|-|0
-handleGetTable|刷新表单 会携带searchForm 及 initSearchForm进行搜索 commandList|-|-|0
-handleSearchClick|搜索点击保存时使用 与上类似 会将page = 1 |-|-|0
-handleChangeStatus|启用 停用 commandChange| row 行数据 useStatus = 'VALID' 相反修改的状态|-|0
-handleDelById|根据id删除 commandDel|id 主键 row行数据|-|0
-handleToFormPage|跳转至表单页 根据配置的formPath进行跳转|{string、 number} id 编辑时的id|-|0
-handleToFormCopyPage|复制 根据配置的copyName进行跳转|{object} params 行数据|-|0
-handleConfirmTip| 提示方法 |{string} tip 提示信息 {function} callback 确定后回调方法 |-|0
-
-# BaseTableMixin
-:::tip
-表单保存混入
-:::
-
-使用必配置参数
-值|说明|类型|
---|--|--|--|
-commandFind|查询 command|string
-commandSave|保存接口 新增修改使用一个command| string
-
-data参数
-值|说明|类型|默认值|可重写|
---|--|--|--|--|
-formInfo|表单信息|object|{}|1
-tableLoading|form加载|boolean|false|1
-mainId|编辑时的id|number、 string|''|0
-submitDisabled|按钮防抖处理|boolean|false|1
-isAdd|是否为添加|boolean|false|0
-
-methods
-name|说明|参数|返回值|可重写|
---|--|--|--|--|
-handleToggleBtnDisabled| toggle disabled | boolean = true | - | 0
-handleCancelClick| router go -1 |- | - | 0
-handleGetFormById|根据id查询表单数据|string、number|-|1
-handleAcceptFile|上传附件接收|{string} key 附件存在标识、{string[] 、string} url 七牛路径|-|0
-handleSubmitForm|保存表单 会根据当前formInfo触发保存接口 校验通过后会触发|-|-|0
-handleBeforeGetForm|查询表单前 可以return一个对象进行请求|-|-|1
-handleAfterGetForm|查询表单后 |-|-|1
-handleBeforeSubmit|上传前提交|formInfo|-|1
-handleSuccessForSave|保存成功回调|formInfo|-|1
+```
+rules.js
+Object.freeze() 冻结对象
+```js
+const business_rules = Object.freeze({
+	'business_information.company_name': [{
+		required: true,
+		message: '请输入企业名称'
+	}],
+	'business_information.social_credit_code': [{
+			required: true,
+			message: '请输入统一社会信用代码'
+		},
+		{
+			pattern: /[^_IOZSVa-z\W]{2}\d{6}[^_IOZSVa-z\W]{10}$/g,
+			message: '社会信用代码不正确'
+		}
+	]
+})
+export {
+	business_rules
+}
+```
+```js
+		validateToast(this, business_rules).then((valid) => {
+						console.log("valid", valid)
+					}).catch((err) => {
+						console.log("未通过校验",err)
+						showToast(err)
+					})
+```
+同一个方法传入不同字符串
+```js
+@click="handleChooseImage('account_bank_permit')"
+```
+```js
+data(){
+  return {
+      business_information:{
+            account_bank_permit:''
+        }  
+    }
+}
+handleChooseImage(key) {
+				chooseImage().then(res => {
+					this.business_information[key] = res;
+				});
+			},
+```
