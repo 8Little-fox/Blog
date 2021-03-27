@@ -2,7 +2,7 @@
 ###
  # @Author: your name
  # @Date: 2021-03-27 21:28:29
- # @LastEditTime: 2021-03-27 21:32:44
+ # @LastEditTime: 2021-03-27 21:45:32
  # @LastEditors: Please set LastEditors
  # @Description: In User Settings Edit
  # @FilePath: \sll-blog\relase.sh
@@ -15,7 +15,7 @@ git commit -m 'update page'
 
 git push
 
-yarn build
+yarn docs:build
 
 cd docs/.vuepress/dist
 
