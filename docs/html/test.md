@@ -28,25 +28,25 @@ titleList: {
 修改前
 ```js
 switch (this.current_index) {
-					case 2:
-						this.$emit('selectChange', 'strategyShow')
-						break;
-					case 3:
-						this.$emit('selectChange', 'dynamicShow')
-						break;
-					case 4:
-						this.$emit('selectChange', 'driveFriendShow')
-						break;
-				}
+		case 2:
+			this.$emit('selectChange', 'strategyShow')
+		break;
+		case 3:
+			this.$emit('selectChange', 'dynamicShow')
+			break;
+		case 4:
+			this.$emit('selectChange', 'driveFriendShow')
+		break;
+	}
 ```
 修改后
 ```js
 const selectShow={
-					2:'strategyShow',
-					3:'dynamicShow',
-					4:'driveFriendShow'
-				}
-				this.$emit('selectChange',selectShow[this.current_index])
+		2:'strategyShow',
+		3:'dynamicShow',
+		4:'driveFriendShow'
+	}
+this.$emit('selectChange',selectShow[this.current_index])
 				
 ```
 修改前
@@ -58,9 +58,7 @@ const selectShow={
 						query: {
 							attractions_id: item.id,
 							address: item.address
-
 						}
-
 					});
 				} else {
 					_router.push({
@@ -68,9 +66,7 @@ const selectShow={
 						query: {
 							attractions_id: item.id,
 							address: item.address
-
 						}
-
 					});
 				}
 ```
@@ -89,7 +85,6 @@ const query = {
 修改后
 ```js
 	handleSubmit(key) {
-				console.log("key",key)
 				apiList[key === 1 ? 'apiUserPortalEnterpriseCreate' : 'apiUserPortalEnterpriseResubmit']({ ...this.business_information})
 					.then(res => {
 						if (res.code == 200) {
@@ -117,36 +112,28 @@ every()  方法数组内的所有元素是否都能通过返回boolean
 如何满足进行Axios请求，不满足弹出错误message
 ```js
 err_state(state) {
-				console.log("state",state)
-				switch (state) {
-					case "company_name":
-						return "请输入企业名称";
-					case "social_credit_code":
-						
-						return "请输入统一社会信用代码";
-					default:
-				
+	switch (state) {
+	case "company_name":
+		return "请输入企业名称";
+	case "social_credit_code":			
+	return "请输入统一社会信用代码";
+	default:		
+	}
+},
+let check_array = Object.entries({ ...this.business_information});
+	let check_all = check_array.every((elem) => {
+		return elem[1];
+	});
+	if (check_all) {
+		this.handleSubmit(this.examine == 1 ? 1 : 2)
+	} else {
+		for (let i = 0; i < check_array.length; i++) {
+			if (!check_array[i][1]) {
+				this.$message.error(this.err_state(check_array[i][0]));
+				break;
 				}
-			},
-	let check_array = Object.entries({ ...this.business_information
-					});
-					let check_all = check_array.every((elem) => {
-						return elem[1];
-					});
-					console.log("check_all", check_all)
-					if (check_all) {
-						console.log("**********")
-						this.handleSubmit(this.examine == 1 ? 1 : 2)
-					} else {
-						for (let i = 0; i < check_array.length; i++) {
-							if (!check_array[i][1]) {
-								console.log("错误")
-							
-								this.$message.error(this.err_state(check_array[i][0]));
-								break;
-							}
-						}
-					}
+			}
+		}
 ```
 方法二：
 valid.js
@@ -200,12 +187,12 @@ export {
 }
 ```
 ```js
-		validateToast(this, business_rules).then((valid) => {
-						console.log("valid", valid)
-					}).catch((err) => {
-						console.log("未通过校验",err)
-						showToast(err)
-					})
+validateToast(this, business_rules).then((valid) => {
+		console.log("valid", valid)
+	}).catch((err) => {
+		console.log("未通过校验",err)
+		showToast(err)
+})
 ```
 同一个方法传入不同字符串
 ```js
@@ -220,8 +207,8 @@ data(){
     }
 }
 handleChooseImage(key) {
-				chooseImage().then(res => {
-					this.business_information[key] = res;
-				});
-			},
+		chooseImage().then(res => {
+		this.business_information[key] = res;
+	});
+},
 ```
