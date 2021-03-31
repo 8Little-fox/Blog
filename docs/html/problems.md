@@ -1,9 +1,20 @@
-<!--
- * @Author: your name
- * @Date: 2021-03-31 12:36:57
- * @LastEditTime: 2021-03-31 12:38:20
- * @LastEditors: your name
- * @Description: In User Settings Edit
- * @FilePath: \sll-blog\docs\html\problems.md
--->
 # 前端面试题
+
+## 1.SPA 单页面应用都有什么优缺点呢？
+
+优点：
+	用户体验好，数据渲染快
+	对服务器压力小（前后端分离）
+
+缺点：
+	初次加载耗时多，SEO难度较大（所有的内容都在一个页面中动态替换显示）
+
+## 2.v-show / v-if 区别
+
+	v-if :	惰性, 如果初次渲染时条件为假 v-if并没有完全销毁，只是成为注释节点
+
+	v-show : 简单的CSS 的 "diaplay" 属性进行切换
+
+## 3.谈谈你的Vue 单向数据流的理解
+
+	
