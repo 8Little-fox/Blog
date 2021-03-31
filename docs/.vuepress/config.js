@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-03-27 21:28:29
- * @LastEditTime: 2021-03-27 23:06:39
+ * @LastEditTime: 2021-03-31 12:39:54
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \sll-blog\docs\.vuepress\config.js
@@ -19,7 +19,8 @@ module.exports = {
           collapsable: true,
           children: [
             ['html/', 'test'],
-            'html/test'
+            'html/test',
+            'html/problems'
           ]
         }
       ]
