@@ -20,7 +20,8 @@ module.exports = {
           children: [
             ['html/', 'test'],
             'html/test',
-            'html/problems'
+            'html/problems',
+            'html/vuex'
           ]
         }
       ]
