@@ -68,7 +68,7 @@
 	组件销毁后调用
 ## 父组件可以监听到子组件的生命周期
 
-```
+```js
 // Parent.vue
 <Child @mounted="doSomething"/>
     
@@ -79,7 +79,7 @@ mounted() {
 
 ```
 父组件通过@hook 来监听子组件的钩子函数
-```
+```js
 <Child @hook:mounted="doSomething" ></Child>
 
 doSomething() {

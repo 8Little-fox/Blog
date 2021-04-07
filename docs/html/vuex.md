@@ -1,7 +1,7 @@
 # Vuex
 
 异步
-```
+```js
 const store = new Vuex.Store({
 	state: {
 		personStrategy : false
@@ -24,7 +24,7 @@ export default store
 ```
 页面中如何获取 vuex 中数据：
 	修改 vuex 中的数据
-```
+```js
 import store from '../store/index.js'	
 store.dispatch('setPersonParameter', true).then(res => {
 	//逻辑操作
