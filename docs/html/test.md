@@ -8,6 +8,7 @@
 ```js
  :class="index==current_index &&'title-color'"
 ```
+
 2,数组和对象接收值时需要加上（[]）
 修改前
 ```js
@@ -198,6 +199,7 @@ validateToast(this, business_rules).then((valid) => {
 ```js
 @click="handleChooseImage('account_bank_permit')"
 ```
+
 ```js
 data(){
   return {
@@ -211,4 +213,59 @@ handleChooseImage(key) {
 		this.business_information[key] = res;
 	});
 },
+```
+es6 `` 模版语法 
+```js
+	<div 
+		v-for="(item,index) of footerList" 
+		:key="index"
+		@click="goMystore"
+	 	 class="lex-Y-Ycenter-align">
+		<image :src="item.img" class="footer-icon"></image>
+		<text 
+		:style="{ color: item.color }"
+		 style="font-size: 22rpx;"
+		 class="mystore-text"
+		 >
+		 {{ item.text }}
+		 </text>
+	</div>
+
+```
+
+```js
+	computed: {
+			footerList() {
+				const prePath = "../static/icon/image/"
+				const tailPath = "@2x.png"
+				const is_tabbar_type = this.tabbar_type === 0
+				const is_active = '#57acfb'
+				const is_unactive = '#b3b3b3'
+				return [
+					{ 
+						text: '线路', 
+						img: `${prePath}${is_tabbar_type ? 'xianlu_xuanzhong': 'xianlu_hui'}${tailPath}` ,
+						color: is_tabbar_type ? is_active : is_unactive
+					},
+					{ 
+						text: '我的', 
+						img: `${prePath}${is_tabbar_type ? 'wode_weixuan': 'wode_lan'}${tailPath}`, 
+						color: is_tabbar_type ? is_unactive : is_active
+					}
+				]
+			}
+		}
+```
+
+如何优雅的循环接口中返回数据
+```js
+	<div class="flex-X-Xevenly" style="margin-top: 44rpx;" v-for="(item,index) of order_info"
+		:key="index">
+		<text style="font-size: 26rpx;color: #999999;margin-right: 41rpx;">{{item.name}}：</text>
+		<text style="color: #333333;font-size: 26rpx;">{{item.preIcon}}{{orderDetails[item.key]}}</text>
+	</div>
+	order_info: [
+		{ name: '订单总额',preIcon: '￥',key: 'total_amount'},
+		{ name: '订单编号',key: 'trade_no'},
+		{ name: '下单时间',key: 'pay_at'}]
 ```

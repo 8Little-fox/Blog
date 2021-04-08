@@ -21,7 +21,8 @@ module.exports = {
             ['html/', 'test'],
             'html/test',
             'html/problems',
-            'html/vuex'
+            'html/vuex',
+            'html/iptForm'
           ]
         }
       ]

@@ -18,7 +18,7 @@ const store = new Vuex.Store({
 				resolve()
 			})
 		}
-	},
+	}
 })
 export default store
 ```
