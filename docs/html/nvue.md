@@ -1,7 +1,9 @@
 # 混合开发 
-## uniapp 嵌入原生
+##  nvue
+uniapp 嵌入原生
+https://nativesupport.dcloud.net.cn/NativePlugin/README 
 
- nvue基于原生引擎的渲染
+nvue 基于原生引擎的渲染
 
  nvue 注意事项
 
