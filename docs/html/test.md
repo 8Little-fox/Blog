@@ -269,3 +269,21 @@ es6 `` 模版语法
 		{ name: '订单编号',key: 'trade_no'},
 		{ name: '下单时间',key: 'pay_at'}]
 ```
+修改前
+```js
+接口返回数据存放到数组中
+	strategy_list: [], //攻略列表
+	square_list: [], //广场列表
+	route_list: [], //路线列表
+	video_list:[],  //短视频
+	if(status === 'video'){
+		if (loadmore) this.video_list = this.video_list.concat(data)
+		else this.video_list = data
+	}
+```
+修改后
+```js
+	// 如果是上拉加载, 进行数组合并, 否则重新赋值
+	this[`${status}_list`] = loadmore ? this[`${status}_list`].concat(data) : data
+
+```
