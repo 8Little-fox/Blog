@@ -18,11 +18,12 @@ module.exports = {
           title: '测试',
           collapsable: true,
           children: [
-            // ['html/', 'test'],
+            ['html/', 'test'],
             'html/test',
             'html/problems',
             'html/vuex',
-            'html/iptForm'
+            'html/iptForm',
+            'html/nvue'
           ]
         }
       ]

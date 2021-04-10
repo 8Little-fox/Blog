@@ -105,8 +105,128 @@ const query = {
 				});
 			},
 ```
+同一个方法传入不同字符串
+```js
+@click="handleChooseImage('account_bank_permit')"
+```
 
-校验
+```js
+data(){
+  return {
+      business_information:{
+            account_bank_permit:''
+        }  
+    }
+}
+handleChooseImage(key) {
+		chooseImage().then(res => {
+		this.business_information[key] = res;
+	});
+},
+```
+
+es6 `` 模版语法 
+```js
+	<div 
+		v-for="(item,index) of footerList" 
+		:key="index"
+		@click="goMystore"
+	 	 class="lex-Y-Ycenter-align">
+		<image :src="item.img" class="footer-icon"></image>
+		<text 
+		:style="{ color: item.color }"
+		 style="font-size: 22rpx;"
+		 class="mystore-text"
+		 >
+		 {{ item.text }}
+		 </text>
+	</div>
+
+```
+
+```js
+	computed: {
+			footerList() {
+				const prePath = "../static/icon/image/"
+				const tailPath = "@2x.png"
+				const is_tabbar_type = this.tabbar_type === 0
+				const is_active = '#57acfb'
+				const is_unactive = '#b3b3b3'
+				return [
+					{ 
+						text: '线路', 
+						img: `${prePath}${is_tabbar_type ? 'xianlu_xuanzhong': 'xianlu_hui'}${tailPath}` ,
+						color: is_tabbar_type ? is_active : is_unactive
+					},
+					{ 
+						text: '我的', 
+						img: `${prePath}${is_tabbar_type ? 'wode_weixuan': 'wode_lan'}${tailPath}`, 
+						color: is_tabbar_type ? is_unactive : is_active
+					}
+				]
+			}
+		}
+```
+
+如何优雅的循环接口中返回数据
+```js
+	<div class="flex-X-Xevenly" style="margin-top: 44rpx;" v-for="(item,index) of order_info"
+		:key="index">
+		<text style="font-size: 26rpx;color: #999999;margin-right: 41rpx;">{{item.name}}：</text>
+		<text style="color: #333333;font-size: 26rpx;">{{item.preIcon}}{{orderDetails[item.key]}}</text>
+	</div>
+	order_info: [
+		{ name: '订单总额',preIcon: '￥',key: 'total_amount'},
+		{ name: '订单编号',key: 'trade_no'},
+		{ name: '下单时间',key: 'pay_at'}]
+```
+修改前
+```js
+接口返回数据存放到数组中
+	strategy_list: [], //攻略列表
+	square_list: [], //广场列表
+	route_list: [], //路线列表
+	video_list:[],  //短视频
+	if(status === 'video'){
+		if (loadmore) this.video_list = this.video_list.concat(data)
+		else this.video_list = data
+	}
+```
+修改后
+```js
+	// 如果是上拉加载, 进行数组合并, 否则重新赋值
+	this[`${status}_list`] = loadmore ? this[`${status}_list`].concat(data) : data
+
+```
+
+## style /class
+数字中要是包含item 的值就就让 边框的颜色显示红色 否则显示 #e7e6e6'  
+``` js
+:style="{ 'borderColor' : chooseTagList.includes(item) ? 'red' : '#e7e6e6'}"
+```
+uniapp 获取模拟器屏幕高度 
+```js
+// 获取整个屏幕高度 返回 rpx
+function getFullScreenHeight() {
+	const { windowWidth, windowHeight } = uni.getSystemInfoSync()
+	const winrate = 750 / windowWidth
+	const winHeightRpx = parseInt(windowHeight * winrate)
+	return winHeightRpx
+}
+```
+
+```js
+:style="{ top: `${topSafeHeight + 40}px`, opacity: bg_opacity }"
+data(){
+	return {
+		topSafeHeight :getFullScreenHeight()  // 屏幕顶部高度
+		bg_opacity；1    // 透明度1
+
+	}
+}
+```
+
+## 校验
 方法一：
 Object.entries()方法返回键值对数组
 every()  方法数组内的所有元素是否都能通过返回boolean
@@ -194,96 +314,4 @@ validateToast(this, business_rules).then((valid) => {
 		console.log("未通过校验",err)
 		showToast(err)
 })
-```
-同一个方法传入不同字符串
-```js
-@click="handleChooseImage('account_bank_permit')"
-```
-
-```js
-data(){
-  return {
-      business_information:{
-            account_bank_permit:''
-        }  
-    }
-}
-handleChooseImage(key) {
-		chooseImage().then(res => {
-		this.business_information[key] = res;
-	});
-},
-```
-es6 `` 模版语法 
-```js
-	<div 
-		v-for="(item,index) of footerList" 
-		:key="index"
-		@click="goMystore"
-	 	 class="lex-Y-Ycenter-align">
-		<image :src="item.img" class="footer-icon"></image>
-		<text 
-		:style="{ color: item.color }"
-		 style="font-size: 22rpx;"
-		 class="mystore-text"
-		 >
-		 {{ item.text }}
-		 </text>
-	</div>
-
-```
-
-```js
-	computed: {
-			footerList() {
-				const prePath = "../static/icon/image/"
-				const tailPath = "@2x.png"
-				const is_tabbar_type = this.tabbar_type === 0
-				const is_active = '#57acfb'
-				const is_unactive = '#b3b3b3'
-				return [
-					{ 
-						text: '线路', 
-						img: `${prePath}${is_tabbar_type ? 'xianlu_xuanzhong': 'xianlu_hui'}${tailPath}` ,
-						color: is_tabbar_type ? is_active : is_unactive
-					},
-					{ 
-						text: '我的', 
-						img: `${prePath}${is_tabbar_type ? 'wode_weixuan': 'wode_lan'}${tailPath}`, 
-						color: is_tabbar_type ? is_unactive : is_active
-					}
-				]
-			}
-		}
-```
-
-如何优雅的循环接口中返回数据
-```js
-	<div class="flex-X-Xevenly" style="margin-top: 44rpx;" v-for="(item,index) of order_info"
-		:key="index">
-		<text style="font-size: 26rpx;color: #999999;margin-right: 41rpx;">{{item.name}}：</text>
-		<text style="color: #333333;font-size: 26rpx;">{{item.preIcon}}{{orderDetails[item.key]}}</text>
-	</div>
-	order_info: [
-		{ name: '订单总额',preIcon: '￥',key: 'total_amount'},
-		{ name: '订单编号',key: 'trade_no'},
-		{ name: '下单时间',key: 'pay_at'}]
-```
-修改前
-```js
-接口返回数据存放到数组中
-	strategy_list: [], //攻略列表
-	square_list: [], //广场列表
-	route_list: [], //路线列表
-	video_list:[],  //短视频
-	if(status === 'video'){
-		if (loadmore) this.video_list = this.video_list.concat(data)
-		else this.video_list = data
-	}
-```
-修改后
-```js
-	// 如果是上拉加载, 进行数组合并, 否则重新赋值
-	this[`${status}_list`] = loadmore ? this[`${status}_list`].concat(data) : data
-
 ```

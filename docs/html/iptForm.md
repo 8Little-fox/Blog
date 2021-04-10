@@ -1,6 +1,7 @@
-# 手封input组件
-
-## 如何优雅的实现数据的双向绑定
+# 手封组件
+啥也不用改直接拿来用就可以了
+##  手封 input 组件
+如何优雅的实现数据的双向绑定
 ```js
 <PickerForm label="发票抬头" v-if="invoiceDisable" v-model="applicationList.ticket_title" />
 ```
@@ -51,3 +52,222 @@ PickerForm组件
 	}
 ```
 
+##  手封底部弹窗
+
+``` vue
+<template>
+	<uni-popup ref="popup_com" type="share" @change="change">
+		<view class="popup-container">
+			<scroll-view :scroll-y="true" class="popup-scroll-view">
+				<slot />
+			</scroll-view>
+		</view>
+	</uni-popup>
+</template>
+<script>
+export default {
+	props: {
+		value: {
+			default: false
+		}
+	},
+	watch: {
+		value(nv) {
+			nv ? this.open() : this.close()
+		}
+	},
+	methods: {
+		change(e) {
+			this.$emit('input', e.show)
+		},
+		open() {
+			this.$refs.popup_com.open()
+		},
+		close() {
+			this.$refs.popup_com.close()
+		}
+	}
+}
+</script>
+
+<style scoped>
+.popup-container {
+	background-color: #fff;
+	border-radius: 30rpx;
+	padding: 30rpx;
+}
+
+.popup-title {
+	font-weight: bold;
+	margin: 15rpx 0;
+}
+
+.popup-scroll-view {
+	/* height: 800rpx; */
+	padding-right: 10rpx;
+}
+
+.make-sure-btn {
+	background-color: #57ACFB;
+	color: #fff;
+
+	width: 600rpx;
+	border-radius: 10rpx;
+	font-size: 32rpx;
+	color: #fff;
+	text-align: center;
+	line-height: 90rpx;
+
+	margin-left: 45rpx;
+	margin-top: 15rpx;
+}
+</style>
+
+```
+ 引用组件：popup_show 控制组件显示隐藏
+``` js 
+	<PropBottom v-model="popup_show" title="自定义标签">
+			<div style="height: 800rpx;">
+				//详细内容
+			</div>
+	</PropBottom>
+
+```
+
+## 手封pisker 组件
+
+`chooseIndex: 0`  默认选中pickcer 的第一个元素
+``` vue
+<template>
+	<uni-popup ref="popup_com" @change="change">
+		<view class="popup-container">
+			<div class="popup-container-header">
+				<text @click="close" class="popup-container-btn" style="color: #747474;">取消</text>
+				<text @click="changeOk" class="popup-container-btn" style="color: #246ef7;">完成</text>
+			</div>
+			<scroll-view :scroll-y="true" style="height: 400rpx;">
+				<picker-view indicator-style="height: 68rpx;" :value="chooseIndex" @change="bindChange"
+					class="picker-view">
+				<slot />
+				</picker-view>
+			</scroll-view>
+		</view>
+	</uni-popup>
+</template> 
+<script>
+	export default {
+		props: ['value','pickArray'],
+		data(){
+			chooseIndex:0
+		},
+		watch: {
+			value(nv) {
+				nv ? this.open() : this.close()
+			}
+		},
+		methods: {
+			change(e) {
+				this.$emit('input', e.show)
+			},
+			open() {
+				this.$refs.popup_com.open()
+			},
+			close() {
+				this.$refs.popup_com.close()
+			},
+			changeOk(){
+				const { chooseIndex } = this 
+				this.$emit('pickChange', this.pickArray[chooseIndex ? chooseIndex : 0])
+				this.$refs.popup_com.close()
+			},
+			bindChange(e) {
+				this.chooseIndex = e.detail.value
+				// console.log("picker-view发送选择改变，携带值为: ",e);
+			}
+		}
+	}
+</script>
+
+<style scoped>
+	.popup-container {
+		background-color: #ffffff;
+	}
+
+	.popup-container-header {
+		flex-direction: row;
+		justify-content: space-between;
+		background-color: #e6e6e6;
+		height: 80rpx;
+		padding: 0 20rpx;
+	}
+
+	.popup-container-btn {
+		font-size: 32rpx;
+		line-height: 80rpx;
+	}
+	
+	.picker-view {
+		width: 750rpx;
+		height: 400rpx;
+	}
+</style>
+
+```
+
+index.vue
+``` vue
+<template>
+	<div>
+		<PickerList v-model="sex_typeList_show" :pickArray="sex_typeList" @pickChange="changeScreensex_typeList">
+			<picker-view-column>
+				<view class="item" v-for="(item,index) in sex_typeList" :key="index">{{item.name}}</view>
+			</picker-view-column>
+		</PickerList>
+	</div>
+</template>
+
+<script>
+	import PickerList from '../components/PickerList.nvue'
+	export default {
+		components: {
+			PickerList
+		},
+		data() {
+			return {
+				sex_type: [], //性别要求
+				sex_typeList_show:false,
+				sex_typeList: [{
+						name: "男",
+						id: 'male'
+					},
+					{
+						name: "女",
+						id: "female"
+					},
+					{
+						name: "男女均可",
+						id: "privary"
+					}
+				]
+			}
+		},
+		methods: {
+			// 性别要求
+			changeScreensex_typeList(e) {
+				this.sex_type = e
+			}
+		}
+	}
+</script>
+
+<style>
+	.item {
+		height: 68rpx;
+		font-size: 20rpx;
+		align-items: center;
+		justify-content: center;
+		text-align: center;
+	}
+</style>
+
+```
