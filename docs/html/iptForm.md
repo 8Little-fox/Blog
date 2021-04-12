@@ -271,3 +271,93 @@ index.vue
 </style>
 
 ```
+
+## 中间弹窗
+``` vue
+<template>
+	<uni-popup ref="Popdialog" :type="center" :animation="true">
+		<div class="cancelled-pop">
+			<div class="flex-Y-XYcenter">
+				<text style="font-size: 34rpx;color: #000000;margin-top: 40rpx;">{{title}}</text>
+				<text style="font-size: 30rpx;color: #666666;margin: 33rpx;">{{value}}</text>
+			</div>
+			<div class="cancell-line"></div>
+			<div class="flex-X-Xaround-Ycenter">
+				<text style="color: #666666;font-size: 30rpx;line-height: 44rpx;margin-top: 30rpx;"
+					@click="cancel">取消</text>
+				<text style="font-size: 30rpx;color: #57acfb;line-height: 44rpx;margin-top: 30rpx;"
+					@click="submit">确认</text>
+			</div>
+		</div>
+	</uni-popup>
+</template>
+
+<script>
+	import uniPopup from '../../components/uni-popup/uni-popup'
+	export default {
+		components:{
+			uniPopup
+		},
+		props: {
+			title: {
+				type: String,
+				default: ''
+			},
+			value: {
+				type: String,
+				default: ''
+			}
+		},
+		data(){
+			return{
+				
+			}
+		},
+		methods:{
+			popopen(){
+				this.$refs.Popdialog.open();
+			},
+			submit(){
+				this.$refs.Popdialog.close();
+				this.$emit("gounind")
+			},
+			cancel(){
+				this.$refs.Popdialog.close();
+			}
+		}
+	}
+</script>
+
+<style scoped>
+	.popdialog {
+		width: 750rpx;
+		opacity: 0.3;
+		background-color: #000000;
+	}
+	.cancelled-txt{
+		margin-top: 10rpx;
+	}
+	.cancelled-pop{
+		margin-top: 100rpx;
+		width: 574rpx;
+		height: 346rpx;
+		opacity: 1;
+		background-color: #ffffff;
+		border-radius: 20rpx;
+	}
+	.cancell-line{
+		width: 574rpx;
+		height: 1rpx;
+		opacity: 1;
+		background-color: #eaeaea;
+	}
+</style>
+
+```
+
+index.vue 
+``` js
+	<Popdialog ref="is_Popdialog" title="账号注销" value="注销账号后，您将不能查询该账号的相 关订单，账户余额也将无法提现，确定注销该账号么？"></Popdialog>
+
+	this.$refs.is_Popdialog.popopen();  打开弹窗
+```

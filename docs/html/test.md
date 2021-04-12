@@ -50,6 +50,22 @@ const selectShow={
 this.$emit('selectChange',selectShow[this.current_index])
 				
 ```
+修改前 
+``` js
+const selectShow={
+	0:'all',
+	1:'pending',
+	2:'wait',
+	3:'comment',
+	4:'sale'
+}
+
+```
+修改后
+``` js
+const selectShow = ['all','pending','wait','comment','sale']
+```
+
 修改前
 路由携参
 ```js
@@ -204,6 +220,18 @@ es6 `` 模版语法
 ``` js
 :style="{ 'borderColor' : chooseTagList.includes(item) ? 'red' : '#e7e6e6'}"
 ```
+
+修改前 
+```js
+<text :class="index==current_index?'title-color':'title-white'" style="font-size: 28rpx;padding-bottom: 20rpx;">{{ title.name }}</text>
+```
+修改后
+将同名的提出来
+```js
+<text :class="`title-${index==current_index ? 'color' :'white'}`" style="font-size: 28rpx;padding-bottom: 20rpx;">{{ title.name }}</text>
+
+```
+
 uniapp 获取模拟器屏幕高度 
 ```js
 // 获取整个屏幕高度 返回 rpx
