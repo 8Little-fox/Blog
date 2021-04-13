@@ -220,7 +220,11 @@ es6 `` 模版语法
 ``` js
 :style="{ 'borderColor' : chooseTagList.includes(item) ? 'red' : '#e7e6e6'}"
 ```
-
+${变量}
+```js
+	<image :src="`${img}${title ==='绑定成功' ? 'zhuxiaochenggong@2x.png':'zhuxiaoshibai@2x.png'}`" mode="" class="cancell-success-img"></image>
+	:class="`${title ==='绑定成功' ? 'cancell-success-img':'cancell-img'}`"
+```
 修改前 
 ```js
 <text :class="index==current_index?'title-color':'title-white'" style="font-size: 28rpx;padding-bottom: 20rpx;">{{ title.name }}</text>
