@@ -91,3 +91,7 @@ mounted(){
    console.log('子组件触发 mounted 钩子函数 ...');
 }
 ```
+
+```js
+ <template> 不属于标签 在其上边v-show 是不行的
+```
