@@ -347,3 +347,20 @@ validateToast(this, business_rules).then((valid) => {
 		showToast(err)
 })
 ```
+# computed
+修改前
+```js
+
+<text v-if="item.pay_status === 0 && item.order_status===0" style="font-size: 26rpx;color: #57acfb;margin-bottom: 66rpx;">待付款</text>
+
+```
+修改后
+```js
+<text style="font-size: 26rpx;color: #57acfb;margin-bottom: 66rpx;">{{order_tatus}}</text>
+
+order_tatus(){
+	if(this.item.pay_status === 0 && this.item.order_status===0){
+		return '待付款'
+	}
+}
+```

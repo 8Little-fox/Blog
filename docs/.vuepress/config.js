@@ -23,7 +23,8 @@ module.exports = {
             'html/problems',
             'html/vuex',
             'html/iptForm',
-            'html/nvue'
+            'html/nvue',
+            'html/es'
           ]
         }
       ]
