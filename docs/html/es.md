@@ -1,5 +1,68 @@
 # Javascript 基础应用
 
+## ES6 
+
+<b>Array.from()</b>
+
+`Array.from()` 方法就是将一个类数组对象或者可遍历对象转换成一个真正的数组
+```js
+ const obj = {
+     0:'a',
+     1:'b',
+     2:'c',
+     length:3
+ }
+//  length 的长度 = 数字的长度 没有的用 ‘undefended’ 占位
+// 对象转化为数组
+ const newArr = Array.from(obj)
+ console.log(newArr); 
+ //[ 'a', 'b', 'c' ]
+
+//  数组转化为数组对象
+ const newArrObj = newArr.map((item,index)=>{
+     return {
+         name:item,
+         key:index
+     }
+ })
+ console.log(newArrObj); 
+ //[ { name: 'a', key: 0 }, { name: 'b', key: 1 }, { name: 'c', key: 2 } ]
+
+
+ const newArrObj = Array.from(obj, function(item,index){
+    return {
+        name:this.age + item,
+        key:index
+    }
+ },{
+     age:18
+ })
+console.log(newArrObj);
+// [
+//   { name: '18a', key: 0 },
+//   { name: '18b', key: 1 },
+//   { name: '18c', key: 2 }
+// ]
+```
+```js
+let arrayLike = {
+    0: 'tom', 
+    1: '65',
+    2: '男',
+    3: ['jane','john','Mary'],
+    'length': 4
+}
+let arr = Array.from(arrayLike)
+console.log(arr) // ['tom','65','男',['jane','john','Mary']]
+
+```
+要将一个类数组对象转换为一个真正的数组，必须具备以下条件：
+
+1、该类数组对象必须具有 length 属性，用于指定数组的长度。如果没有 length 属性，那么转换后的数组是一个空数组。
+
+2、该类数组对象的属性名必须为数值型或字符串型的数字
+
+
 ## ES7新特性
 
 es7 includes()
@@ -199,4 +262,40 @@ async function example() {
 example().then(result => console.log(result))
 // ['slowest', 'slow']
 
+```
+
+## ES9
+
+`...` Rest参数和扩展运算符
+
+es6 作用对象仅用于数组
+```js
+restParam(1, 2, 3, 4, 5);
+
+function restParam(p1, p2, ...p3) {
+  // p1 = 1
+  // p2 = 2
+  // p3 = [3, 4, 5]
+}
+```
+
+es9 在ES9中为对象提供了像数组一样的Rest参数和展开运算符
+
+Rest参数用法
+```js
+  var obj = {
+            a: 1,
+            b: 2,
+            c: 3
+        }
+        const { a, ...param } = obj;
+        console.log(a)     //1
+        console.log(param) //{b: 2, c: 3}
+```
+
+`assign` 合并俩个对象
+```js
+const merged = {...obj1, ...obj2};
+//同：
+const merged = Object.assign({}, obj1, obj2);
 ```

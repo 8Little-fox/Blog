@@ -464,3 +464,25 @@ computed:{
 				this.$emit('getSquare',arr[index])
 			},
 ```
+
+
+修改前 
+```js
+		let param = {}
+				if (this.type == 'been') {
+					param = {
+						travel_experiences_json: this.radioArr.map((id) => this.attractionsList.find((item) => item.id === id))
+					}
+				} else {
+					param = {
+						love_place_json: this.radioArr.map((id) => this.attractionsList.find((item) => item.id === id))
+					}
+				}
+```
+修改后
+```js
+let param = {
+	[this.type == 'been' ? 'travel_experiences_json' : 'love_place_json'] : 
+	this.radioArr.map((id) => this.attractionsList.find((item) => item.id === id))
+	}
+```
