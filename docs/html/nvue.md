@@ -26,6 +26,8 @@ nvue 基于原生引擎的渲染
 
  9:border 不支持简写
 
+ 10: nvue 页面中 IOS不支持使用 <b><img> 标签</b> 可以使用 <b><image> 标签</b>
+
  ```js
  /* 错误 */
 .class {

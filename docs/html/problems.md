@@ -95,3 +95,18 @@ mounted(){
 ```js
  <template> 不属于标签 在其上边v-show 是不行的
 ```
+
+## 按+操作符的转换规则，
+
+如果操作数为对象，那么调用它们的toString方法转换成字符串，执行字符串连接操作
+{}转成字符串为"[object Object]"
+```js
+console.log(({} + {}).length)  //30 
+转换成 console.log(("[object Object]"+"[object Object]").length);//30
+
+
+console.log(([1] + [2]).length)  //1
+
+console.log((function(a, b, c) {}).length)   //3  接受三个实参
+
+```

@@ -134,7 +134,7 @@ export default {
 
 ```
 
-## 手封pisker 组件
+## 手封picker 组件
 
 `chooseIndex: 0`  默认选中pickcer 的第一个元素
 ``` vue
