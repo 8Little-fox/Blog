@@ -364,3 +364,103 @@ order_tatus(){
 	}
 }
 ```
+
+修改前
+```js
+<div style="">
+	<text style="font-size: 30rpx;color: #666666;margin-top: 33rpx;">1.每邀请一位好友注册成为云自驾</text>
+	<text style="font-size: 30rpx;color: #666666;padding-left: 15rpx;">APP新用户，即可获得现金奖励。</text>
+	<text style="font-size: 30rpx;color: #666666;margin-top: 33rpx;">2.现金奖励可以在钱包进行提现。</text>
+	<text style="font-size: 30rpx;color: #666666;margin-top: 33rpx;">3.最终解释权归云自驾APP所有。</text>
+</div>
+```
+修改后
+
+```js
+<div style="" v-for="item of list" :key="item">
+	<text style="font-size: 30rpx;color: #666666;" :style="item.style">{{item.value}}</text>
+</div>
+
+computed:{
+	list(){
+		const MARGIN_TOP = { marginTop : '33rpx' }
+			return [
+				{value : '1.每邀请一位好友注册成为云自驾' , style:MARGIN_TOP},
+				{value : 'APP新用户，即可获得现金奖励。' , style:{paddingLeft: '15rpx'}},
+				{value : '2.现金奖励可以在钱包进行提现。' , style:MARGIN_TOP},
+				{value : '3.最终解释权归云自驾APP所有。' , style:MARGIN_TOP}
+			]
+		}
+	}
+```
+修改前
+```js
+		:style="{
+				width: widthPx + 'px',
+				height: widthPx + 'px',
+				backgroundColor: bgColor
+			}"
+		<canvas
+			class="canvas"
+			:canvas-id="elId"
+			:id="elId"
+			:style="{
+				width: widthPx + 'px',
+				height: widthPx + 'px'
+			}"
+		></canvas>
+```
+修改后
+```js
+		:style="[styles,{backgroundColor: bgColor}]"
+		<canvas
+			class="canvas"
+			:canvas-id="elId"
+			:id="elId"
+			:style="{ style }"
+		></canvas>
+
+		computed:{
+			styles(){
+				return {
+						width: widthPx + 'px',
+						height: widthPx + 'px'
+					}
+			}
+	},
+```
+
+修改前 
+```js
+		changeSwiper(e) {
+				this.current_index = e.detail.current;
+				switch (this.current_index) {
+					case 0:
+						this.screenShow = false
+						this.$emit("getSquare", "square")
+						break;
+					case 1:
+						this.screenShow = true
+						this.getLocation()
+						this.$emit("getSquare", "nearby")
+						break;
+					case 2:
+						this.getLocation()
+						this.$emit('getSquare', "destination")
+						break;
+				}
+			},
+```
+修改后
+```js
+
+			changeSwiper(e) {
+				const arr = ['square' , 'nearby' , 'destination']
+				const index = this.current_index = e.detail.current;
+				[0,1].includes(index) && (this.screenShow === index === 1)
+				if(index === 1 || index === 2){
+					[1,2].includes(index) && this.getLocation()
+				}
+				this.$emit('getSquare',arr[index])
+			},
+```
