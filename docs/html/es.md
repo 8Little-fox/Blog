@@ -2,7 +2,7 @@
 
 ## ES6 
 
-<b>Array.from()</b>
+### <b>Array.from()</b>
 
 `Array.from()` 方法就是将一个类数组对象或者可遍历对象转换成一个真正的数组
 ```js
@@ -62,6 +62,23 @@ console.log(arr) // ['tom','65','男',['jane','john','Mary']]
 
 2、该类数组对象的属性名必须为数值型或字符串型的数字
 
+
+### <b>Object.keys()</b>
+返回值会自动排序
+```js
+const obj = {
+  100: '一百',
+  2: '二',
+  7: '七'
+}
+Object.keys(obj) // ["2", "7", "100"]
+```
+> 
+如果属性名的类型是`Number`，那么`Object.keys`返回值是按照key从小到大排序
+
+如果属性名的类型是`String`，那么`Object.keys`返回值是按照属性被创建的时间升序排序。
+
+如果属性名的类型是`Symbol`，那么逻辑同`String`相同
 
 ## ES7新特性
 
@@ -140,7 +157,8 @@ Object.entries(obj).forEach(([key, value]) =>{
  console.log(key + ": " + value); // 输出a: 1, b: 2, c: 3
 })
 ```
-## JavaScript是单线程，怎样执行异步的代码 ？
+## Promise
+### JavaScript是单线程，怎样执行异步的代码 ？
 
 JS 中分为两种任务类型：宏任务`macrotask` 和 微任务`microtask`
 
@@ -153,6 +171,7 @@ JS 中分为两种任务类型：宏任务`macrotask` 和 微任务`microtask`
 
 我们以 setTimeout、process.nextTick、promise 为例直观感受下两种任务队列的运行方式
 
+https://juejin.cn/post/6844904077537574919   
 ```js
 console.log('main1'); 
 
@@ -245,6 +264,20 @@ console.log(4);
 // 4
 // 3
 ```
+过程分析：
+
+从上至下，先遇到`new Promise`，执行其中的同步代码1
+
+再遇到`resolve('success')`， 将promise的状态改为了`resolved`并且将值保存下来
+
+继续执行同步代码2
+
+跳出`promise`，往下执行，碰到`promise.then`这个微任务，将其加入微任务队列
+
+执行同步代码4
+
+本轮宏任务全部执行完毕，检查微任务队列，发现`promise.then`这个微任务且状态为`resolved`，执行它。
+
 
 `Promise` 等待 成功 失败
 ```js
