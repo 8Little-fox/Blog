@@ -24,7 +24,8 @@ module.exports = {
             'html/vuex',
             'html/iptForm',
             'html/nvue',
-            'html/es'
+            'html/es',
+            'html/array'
           ]
         }
       ]

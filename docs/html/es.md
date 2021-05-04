@@ -1,8 +1,6 @@
 # Javascript 基础应用
 
-## ES6 
-
-### <b>Array.from()</b>
+## Array.from()
 
 `Array.from()` 方法就是将一个类数组对象或者可遍历对象转换成一个真正的数组
 ```js
@@ -63,8 +61,8 @@ console.log(arr) // ['tom','65','男',['jane','john','Mary']]
 2、该类数组对象的属性名必须为数值型或字符串型的数字
 
 
-### <b>Object.keys()</b>
-返回值会自动排序
+## Object.keys()
+返回值会自动排序 ？
 ```js
 const obj = {
   100: '一百',
@@ -80,11 +78,8 @@ Object.keys(obj) // ["2", "7", "100"]
 
 如果属性名的类型是`Symbol`，那么逻辑同`String`相同
 
-## ES7新特性
-
-es7 includes()
-
-es6 indexOf()
+## includes()
+## indexOf()
 
 <b>Array.prototype.includes</b>
 
@@ -129,9 +124,8 @@ demo.includes(NaN)       //true
 ```
 >注意：在这里，需要注意一点，includes()只能判断简单类型的数据，对于复杂类型的数据，比如对象类型的数组，二维数组，这些，是无法判断的
 
-## ES8 新特性
 
-Object.values()
+## Object.values()
 
 Object.entries()
 
@@ -158,7 +152,7 @@ Object.entries(obj).forEach(([key, value]) =>{
 })
 ```
 ## Promise
-### JavaScript是单线程，怎样执行异步的代码 ？
+## JavaScript是单线程，怎样执行异步的代码 ？
 
 JS 中分为两种任务类型：宏任务`macrotask` 和 微任务`microtask`
 
@@ -296,10 +290,7 @@ example().then(result => console.log(result))
 // ['slowest', 'slow']
 
 ```
-
-## ES9
-
-`...` Rest参数和扩展运算符
+## `...` Rest参数和扩展运算符
 
 es6 作用对象仅用于数组
 ```js
@@ -332,3 +323,54 @@ const merged = {...obj1, ...obj2};
 //同：
 const merged = Object.assign({}, obj1, obj2);
 ```
+
+## reduce()
+
+`reduce()`函数接受四个参数
+
+  * Accumulator (acc) (累计器)
+  * Current Value (cur) (当前值)
+  * Current Index (idx) (当前索引)
+  * Source Array (src) (源数组)
+
+回调函数第一次执行时，accumulator和currentValue的取值有两种情况：
+
+
+* 如果调用reduce()时提供了initialValue，accumulator取值为initialValue,currentValue取数组中的第一个值；
+* 如果没有提供initialValue，那么accumulator取数组中的第一个值，currentValue取数组中的第二个值;
+
+上代码
+```js
+[0,1,2,3,4].reduce(accumulator,currentValue, currentIndex,array){
+  return accumulator+currentValue   //10
+}
+```
+上面代码有点繁琐，我们用剪头函数来实现一下罢
+```js
+[0, 1, 2, 3, 4].reduce((prev,curr)=> prev + curr)
+```
+
+累加对象数组里的属性值
+```js
+let initValue = 0 
+let total = [
+    {subject: 'Math', score: 90},
+    {subject: 'Chinese', score: 90},
+    {subject: 'Englsh', score: 100}
+].reduce((acc, cur)=>{
+    return acc+cur.score
+},initValue)
+console.log(total);
+
+```
+
+将二维数组转化为一维数组
+
+`初始值 []`
+```js
+let arr = [[0,1],[2,3],[4,5]]
+arr.reduce((acc,cur)=>{
+  return acc.concat(cur)
+},[])
+```
+

@@ -105,8 +105,25 @@ console.log(({} + {}).length)  //30
 转换成 console.log(("[object Object]"+"[object Object]").length);//30
 
 
-console.log(([1] + [2]).length)  //1
+console.log(([1] + [2]).length)  //2
 
 console.log((function(a, b, c) {}).length)   //3  接受三个实参
 
+```
+
+
+## 上传图片将图片的命名方式调整为时间戳与哈希算法相结合的方式，
+dounload 函数中
+```js
+/** 
+ * 上传腾讯云图片hash模式 
+ */	
+	function createHash(hashLength) {
+		// 默认长度 24
+		return Array.from(Array(Number(hashLength) || 24), () => Math.floor(Math.random() * 36).toString(36)).join('');
+	}
+```
+```js
+
+const fileName = md5(`_${filePath.split("//")[1]}_${createHash(20)}_${Math.ceil(Math.random() * (1 - 100) + 100)}_${new Date().getTime()}`);
 ```
