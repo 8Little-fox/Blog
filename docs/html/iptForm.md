@@ -361,3 +361,137 @@ index.vue
 
 	this.$refs.is_Popdialog.popopen();  打开弹窗
 ```
+
+## 时间选择器
+
+PickerTimer.nvue
+```js
+<template>
+	<div>
+		<uni-popup ref="popup_com" type="share" @change="change">
+			<view class="popup-container">
+				<div class="popup-container-header">
+					<text @click="close" class="popup-container-btn" style="color: #747474;">取消</text>
+					<text @click="changeOk" class="popup-container-btn" style="color: #246ef7;">完成</text>
+				</div>
+				<scroll-view :scroll-y="true" class="popup-scroll-view">
+						<PickerList title="自定义标签" img="">
+							<picker-view  :indicator-style="indicatorStyle" :value="date_index" @change="bindChange"
+								class="picker-view">
+								<picker-view-column>
+									<view class="item" v-for="(item,index) in years" :key="index">{{item}}年</view>
+								</picker-view-column>
+								<picker-view-column>
+									<view class="item" v-for="(item,index) in months" :key="index">{{item}}月</view>
+								</picker-view-column>
+								<picker-view-column>
+									<view class="item" v-for="(item,index) in days" :key="index">{{item}}日</view>
+								</picker-view-column>
+							</picker-view>
+						</PickerList>
+					<picker-view />
+				</scroll-view>
+			</view>
+		</uni-popup>
+	</div>
+</template>
+<script>
+export default {
+	props: {
+		value: {
+			default: false
+		}
+	},
+	data(){
+		const years = []
+		const months = []
+		const days = []
+		for (let i = 221; i <= new Date().getFullYear() + 20; i++) {
+			years.push(i)
+		}
+		for (let i = 0; i <= 12; i++) {
+			months.push(i)
+		}
+		for (let i = 0; i <= 31; i++) {
+			days.push(i)
+		}
+		return {
+			title: 'picker-view',
+			years,
+			months,
+			days,
+			date_value:`${new Date().getFullYear()+'年'}${new Date().getMonth()+1+'月'}${new Date().getDate()+'日'}`,
+			date_index: [new Date().getFullYear() - 221,new Date().getMonth()+1,new Date().getDate()],
+			indicatorStyle: `height: 50px;`
+		}
+	},
+	watch: {
+		value(nv) {
+			nv ? this.open() : this.close()
+		}
+	},
+	methods: {
+		change(e) {
+			this.$emit('input', e.show)
+		},
+		open() {
+			this.$refs.popup_com.open()
+		},
+		close() {
+			this.$refs.popup_com.close()
+		},
+		changeOk() {
+			
+			this.$emit('dataChange',this.date_value)
+			this.$refs.popup_com.close()
+		},
+		bindChange(e) {
+			const { years, months, days } = this
+			this.date_index = e.detail.value
+			const current_data = e.detail.value
+			const date = [
+				years[current_data.[0]],
+				months[current_data.[1]],
+				days[current_data.[2]],
+			]
+			this.date_value = `${date.[0]+'年'}${date.[1]+ '月'}${date.[2]+'日'}`
+		}
+	}
+}
+</script>
+
+<style scoped>
+	.popup-container {
+		background-color: #ffffff;
+	}
+
+	.popup-container-header {
+		flex-direction: row;
+		justify-content: space-between;
+		background-color: #e6e6e6;
+		height: 80rpx;
+		padding: 0 20rpx;
+	}
+
+	.popup-container-btn {
+		font-size: 32rpx;
+		line-height: 80rpx;
+	}
+	.picker-view {
+		width: 750rpx;
+		height: 600rpx;
+		margin-top: 20rpx;
+	}
+	
+	.item {
+		height: 50px;
+		align-items: center;
+		justify-content: center;
+		text-align: center;
+	}
+</style>
+
+```
+```js
+<picker-timer v-model="is_current_date" @dataChange="(e) => {strategy.travel_at = e}"></picker-timer>
+```

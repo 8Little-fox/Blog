@@ -25,7 +25,8 @@ module.exports = {
             'html/iptForm',
             'html/nvue',
             'html/es',
-            'html/array'
+            'html/array',
+            'html/css'
           ]
         }
       ]
