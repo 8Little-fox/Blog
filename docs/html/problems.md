@@ -127,3 +127,11 @@ dounload 函数中
 
 const fileName = md5(`_${filePath.split("//")[1]}_${createHash(20)}_${Math.ceil(Math.random() * (1 - 100) + 100)}_${new Date().getTime()}`);
 ```
+## Vue 组件的通讯方式有哪几种？
+* `props / $emit`  适用父子组件通讯
+
+* ` ref 与 $parent/$children` 适用父子组件通讯
+
+	如果在普通的 DOM 元素上使用，引用指向的就是 DOM 元素；如果用在子组件上，引用就指向组件实例
+
+	$parent / $children：访问父 / 子实例

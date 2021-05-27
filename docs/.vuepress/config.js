@@ -26,7 +26,8 @@ module.exports = {
             'html/nvue',
             'html/es',
             'html/array',
-            'html/css'
+            'html/css',
+            'html/uniapp'
           ]
         }
       ]
