@@ -17,6 +17,8 @@ scrollView() {
 <div id="comment"/>
 
 ```
+> 如果节点绑定到某个组件上导致Android 不能拿到节点，ios 是可以的，所以应该把dom节点绑定到 `div` 上
+
 页面渲染完成后在进行指定位置跳转，
 ```js
 	setTimeout(() => {
