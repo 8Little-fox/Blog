@@ -236,6 +236,16 @@ ${变量}
 
 ```
 
+修改前
+```js
+<image :src="squareDetaileList.type === 'dynamic' ? '../static/icon/image/dt_dongtai@2x.png?imageView2/1/w/50/h/15' : '../static/icon/image/dt_jiayou@2x.png?imageView2/1/w/50/h/15'" mode="aspectFill" style="width: 92rpx;height: 32rpx;"></image>
+
+```
+修改后
+```js
+<image class="img" :src="`../static/icon/image/dt_${squareDetaileList.type === 'dynamic' ? 'dongtai' : 'jiayou'}@2x.png?imageView2/1/w/50/h/15`" mode="aspectFill" />
+```
+
 uniapp 获取模拟器屏幕高度 
 ```js
 // 获取整个屏幕高度 返回 rpx
@@ -485,4 +495,21 @@ let param = {
 	[this.type == 'been' ? 'travel_experiences_json' : 'love_place_json'] : 
 	this.radioArr.map((id) => this.attractionsList.find((item) => item.id === id))
 	}
+```
+多级判断
+修改前 
+```js
+		if (this.squareDetaileList.user.nick_name) {
+			this.chooseName = this.squareDetaileList.user.nick_name;
+		} else if (this.squareDetaileList.user.real_name) {
+			this.chooseName = this.squareDetaileList.user.real_name;
+		} else {
+			this.chooseName = this.squareDetaileList.user.phonenum;
+		}
+```
+修改后
+```js
+	const { nick_name, real_name, phonenum: phonenumStr } = res.data;
+	this.chooseName = nick_name || real_name || phonenum(phonenum);
+
 ```

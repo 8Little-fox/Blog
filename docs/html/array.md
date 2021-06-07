@@ -63,3 +63,67 @@ const result = arr1.filter(function(v){
 })
 console.log(result);
 ```
+
+## 数组并集
+首先过滤出arr1 不等于arr2 的，然后在将数组合并成一个
+```js
+const arr1 = [1,2,3,4,5,7,8,9]
+const arr2 = [7,8,9]
+const inter = arr1.concat(arr2.filter(v =>!arr1.includes(v)))
+console.log(inter);
+
+```
+## 常用正则表达式
+
+```js
+/**
+ * @描述 正则表达式
+ */
+export function regexpCheck(mode) {
+	let regexp = ""
+
+	switch (mode) {
+		case 'name':
+			regexp = /^[\u4E00-\u9FA5\uf900-\ufa2d·s]{2,20}$/
+			return {
+				regexp, title: '中文姓名'
+			};
+		case "phone":
+			regexp = /^(13[0-9]|14[01456879]|15[0-35-9]|16[2567]|17[0-8]|18[0-9]|19[0-35-9])\d{8}$/
+			return {
+				regexp, title: '手机号'
+			};
+		case "身份证":
+			regexp =
+				/(^[1-9]\d{5}(18|19|([23]\d))\d{2}((0[1-9])|(10|11|12))(([0-2][1-9])|10|20|30|31)\d{3}[0-9Xx]$)|(^[1-9]\d{5}\d{2}((0[1-9])|(10|11|12))(([0-2][1-9])|10|20|30|31)\d{2}$)/
+			return {
+				regexp, title: '身份证'
+			};
+		case "护照":
+			regexp = /^([a-zA-z]|[0-9]){5,17}$/
+			return {
+				regexp, title: "护照"
+			};
+		case "港澳通行证":
+			regexp = /^[CW]\d{8}$/
+			return {
+				regexp, title: "港澳通行证"
+			};
+		case "军人证":
+			regexp = /^[\u4E00-\u9FA5](字第)([0-9a-zA-Z]{4,8})(号?)$/
+			return {
+				regexp, title: "军人证"
+			};
+		case "统一社会信用代码":
+			regexp = /^([0-9A-HJ-NPQRTUWXY]{2}\d{6}[0-9A-HJ-NPQRTUWXY]{10}|[1-9]\d{14})$/
+			return {
+				regexp, title: "统一社会信用代码"
+			}
+        case "邮箱地址":
+			regexp = /^[a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/
+			return {
+				regexp, title: "邮箱地址"
+			}
+	}
+}
+```
