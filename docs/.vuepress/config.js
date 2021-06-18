@@ -15,10 +15,9 @@ module.exports = {
     sidebar: {
       '/html': [
         {
-          title: '测试',
+          title: 'llsun',
           collapsable: true,
           children: [
-            ['html/', 'test'],
             'html/test',
             'html/problems',
             'html/vuex',
@@ -26,7 +25,10 @@ module.exports = {
             'html/es',
             'html/array',
             'html/css',
-            'html/uniapp'
+            'html/uniapp',
+            'html/linux',
+            'html/vim',
+            'html/vue'
           ]
         }
       ]
