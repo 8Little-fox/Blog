@@ -184,6 +184,34 @@ es6 `` 模版语法
 		}
 ```
 
+修改后 
+
+```js
+	<div class="flex-around_wrap_start">
+		<div v-for="(item, index) of driveFriend" :key="index">
+			<div class="flex-X-Xevenly" style="width: 300rpx;">
+				<text :style="item.style" class="drivefriends-txt">{{ item.name }}</text>
+				<text class="drivefriends-txt">{{ item.value }}</text>
+			</div>
+		</div>
+	</div>
+	
+	computed: {
+		driveFriend() {
+			const { departure_at, gender_str, people_num, driving_experience, drive_friend_type, is_car } = this.squareDetaileList;
+			return [
+				// { name: "目的地：", value: attractions.name || "--" },
+				{ name: "出发时间：", value: departure_at },
+				{ name: "性别要求：", value: gender_str, style: { marginLeft: "125rpx" } },
+				{ name: "人数要求：", value: `${people_num}人` },
+				{ name: "车龄要求：", value: `${driving_experience}年`, style: { marginLeft: "125rpx" } },
+				{ name: "同游类型：", value: drive_friend_type },
+				{ name: "是否有车：", value: `${is_car === "yes" ? "有" : "无"}车`, style: { marginLeft: "125rpx" } }
+			];
+		}
+	}
+```
+
 如何优雅的循环接口中返回数据
 ```js
 	<div class="flex-X-Xevenly" style="margin-top: 44rpx;" v-for="(item,index) of order_info"
