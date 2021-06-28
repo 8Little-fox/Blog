@@ -60,3 +60,71 @@ export default {
 
 * immediate
 
+创建组件后立即运行监听程序
+
+`immediate:true`
+
+```js
+export default {
+  data: () => ({
+    dog: ''
+  }),
+  watch: {
+   dog: {
+     handler(newVal, oldVal) {
+        console.log(`Dog changed: ${newVal}`);
+     },
+     immediate:true
+   }
+  }
+}
+```
+* deep
+
+`deep: true`
+
+`deep` 默认值是`false` ,即是否开启深度监听,监听器会层层遍历，给对象的所以属性（及子属性） 添加监听器，
+但是会消耗很大的性能，修改obj 中任何一个属性都会触发监听器
+
+```js
+export default {
+  data: () => ({
+    obj: {
+      a : 1,
+      b : 2
+    }
+  }),
+  watch: {
+   dog: {
+     handler(newVal, oldVal) {
+        console.log(`Dog changed: ${newVal}`);
+     },
+     immediate: true,
+     deep: true
+   }
+  }
+}
+  
+```
+
+监听obj中具体某一个属性
+```js
+export default {
+  data: () => ({
+    obj: {
+      a : 1,
+      b : 2
+    }
+  }),
+  watch: {
+   'obj.a': {
+     handler(newVal, oldVal) {
+        console.log(`Dog changed: ${newVal}`);
+     },
+     immediate: true,
+     deep: false
+   }
+  }
+}
+  
+```

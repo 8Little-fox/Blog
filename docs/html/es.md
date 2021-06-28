@@ -162,6 +162,34 @@ JS 中分为两种任务类型：宏任务`macrotask` 和 微任务`microtask`
 
 > 提示：在 node 环境下，process.nextTick 的优先级高于 Promise，也就是可以简单理解为：在宏任务结束后会先执行微任务队列中的 nextTickQueue 部分，然后才会执行微任务中的 Promise 部分。
 
+执行顺序： 当执行栈执行完毕后，会首先执行微任务队列，当微任务队列执行完毕再从宏任务中读取并执行，当再次遇到微任务时，放入微任务队列。
+
+```js
+setTimeout(() => {
+  console.log(1);
+  Promise.resolve().then(() => {
+    console.log(2);
+  })
+}, 0)
+setTimeout(() => {
+  console.log(3);
+}, 0)
+Promise.resolve().then(() => {
+  console.log(4);
+})
+console.log(5);
+// 输出结果：5 4 1 2 3
+```
+代码分析：
+
+console.log(5)是唯一的同步任务，首先执行，输出5
+将所有异步任务放在Task队列中，挂起
+同步任务执行完毕，开始执行微任务队列，即Promise.then，输出4
+微任务队列执行完毕，执行宏任务队列setTimeout
+宏任务队列中首先执行同步任务，再次遇到微任务，放入微任务队列中，输出1
+同步任务执行完毕，执行微任务队列，输出2
+微任务队列执行完毕，执行宏任务队列setTimeout，输出3
+
 
 我们以 setTimeout、process.nextTick、promise 为例直观感受下两种任务队列的运行方式
 
