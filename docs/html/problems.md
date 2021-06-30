@@ -135,3 +135,28 @@ const fileName = md5(`_${filePath.split("//")[1]}_${createHash(20)}_${Math.ceil(
 	如果在普通的 DOM 元素上使用，引用指向的就是 DOM 元素；如果用在子组件上，引用就指向组件实例
 
 	$parent / $children：访问父 / 子实例
+
+
+## 非父子间传值
+
+事件总线：原理上就是建立一个公共的js ,专门用来传递信息
+
+新建bus.js
+```js
+import Vue from 'vue'
+export default new Vue;
+```
+在需要传值和接收值的地方引入
+
+传值
+
+```js
+bus.$emit('msg','Hello,World')
+```
+接收值
+
+```js
+bug.$on('msg',val => {
+	console.log(val)
+})
+```
