@@ -414,3 +414,12 @@ let setArr = new Set(arr)
 //Set(5) { 1, 2, 4, 5, 6 }
 ```
 
+## Find()
+
+通过 `find` 进行匹配，匹配完成后对 `this.squareItem` 中的值进行修改
+```js
+const arr_id = 1
+const comment_num = 2
+const arr = this.squareItem.find(i => i.id == arr_id)
+arr.comment_num = comment_num
+```

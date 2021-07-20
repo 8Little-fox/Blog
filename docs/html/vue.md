@@ -1,4 +1,4 @@
-# vue
+# Vue
 
 ## component内置的组件
 
@@ -127,4 +127,10 @@ export default {
   }
 }
   
+```
+监听 `page` ，page 变化后之间调用列表接口 
+```js
+ watch: {
+    page: 'handleGetTable'
+  },
 ```

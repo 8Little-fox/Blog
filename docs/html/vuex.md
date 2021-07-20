@@ -49,7 +49,7 @@ export default new Vuex.Store({
 	}
 })
 ```
-## state
+## State
 在组件中获取vuex 中数据
 
 ```js
@@ -70,7 +70,8 @@ computed:{
 	})
 }
 ```
-## mutations
+## Mutations
+mutation 必须同步执行
 触发 `mutations` 	中的事件有一下两种办法
 
 办法一：
@@ -80,6 +81,8 @@ this.$store.commit('decrease')
 ```
 方法二：可以使用 `mapMutations`辅助函数将组件中的methods映射为 `store.commit`
 
+> 提示：	...mapMutations(['add']) 数组匹配必须要确保事件名称和mutations 中存的方法名相同
+...mapMutations({ addchange: 'add' })
 ```js
 import { mapMutations } from 'vuex'
 
@@ -89,5 +92,61 @@ methods:{
 	...mapMutations([
 		'add'
 	])
+}
+```
+
+## 分发 Action
+
+
+```js
+const store = new Vuex.Store({
+state: {
+    count: 0
+  },
+  getters: {
+    doubleCount(state) {
+      return state.count * 2
+    }
+  },
+  mutations: {
+    add(state) {
+      state.count++
+    },
+    decrease(state) {
+      state.count--
+    }
+  },
+  actions: {
+    delayAdd(context) { 
+      setTimeout(() => {
+        context.commit('add')
+      }, 1000)
+    }
+  }
+})
+export default store
+
+```
+在组件中分发 Action
+
+方法一：
+```js
+ this.$store.dispatch('delayAdd')
+```
+方法二： 
+使用 mapActions 辅助函数将组件的 methods 映射为 store.dispatch
+
+```js
+import { mapActions } from 'vuex'
+export default {
+  // ...
+  methods: {
+    ...mapActions([
+      'delayAdd', // 将 `this.delayAdd()` 映射为 `this.$store.dispatch('delayAdd')`
+    ]),
+    ...mapActions({
+      add: 'delayAdd' // 将 `this.add()` 映射为 `this.$store.dispatch('delayAdd')`
+    })
+  }
 }
 ```
