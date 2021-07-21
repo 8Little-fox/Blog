@@ -135,8 +135,18 @@ export default {
   },
 ```
 
-## Vue 中的修饰符
+## vue.sync
 
 `v-bind` 修饰符 .sync
+```js
+//父组件
+<comp :myMessage.sync="bar"></comp>
+//子组件
+this.$emit('update:myMessage',params);
 ```
-```
+
+::: warning
+
+使用`sync`的时候,子组件传递的事件名必须为 `updata:value`,其中value必须与组件中的props
+中声明的名称完全一致
+:::
