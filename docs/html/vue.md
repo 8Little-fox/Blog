@@ -134,3 +134,9 @@ export default {
     page: 'handleGetTable'
   },
 ```
+
+## Vue 中的修饰符
+
+`v-bind` 修饰符 .sync
+```
+```

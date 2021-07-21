@@ -93,5 +93,3 @@ uniapp 简直太坑了，当时我做的是 `nvue` 嵌入原生的项目，当�
 console / debug / log /info / warn 警告 /error 错误日志 
 
 >不支持 clear()
-
-

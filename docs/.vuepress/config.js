@@ -23,7 +23,6 @@ module.exports = {
             'html/vuex',
             'html/iptForm',
             'html/es',
-            'html/javascript',
             'html/array',
             'html/css',
             'html/uniapp',

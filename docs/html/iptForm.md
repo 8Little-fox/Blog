@@ -6,6 +6,9 @@
 <PickerForm label="发票抬头" v-if="invoiceDisable" v-model="applicationList.ticket_title" />
 ```
 PickerForm组件
+
+::: details
+
 ```js
 	<div class="divModel">
 			<div class="divModel_div">
@@ -22,6 +25,9 @@ PickerForm组件
 			</div>
 		</div>
 ```
+:::
+
+::: details
 ```js
 	export default {
 		props: {
@@ -51,8 +57,11 @@ PickerForm组件
 		}
 	}
 ```
+:::
 
 ##  手封底部弹窗
+
+::: details
 
 ``` vue
 <template>
@@ -124,6 +133,8 @@ export default {
 </style>
 
 ```
+
+
  引用组件：popup_show 控制组件显示隐藏
 ``` js 
 	<PropBottom v-model="popup_show" title="自定义标签">
@@ -133,8 +144,10 @@ export default {
 	</PropBottom>
 
 ```
-
+:::
 ## 手封picker 组件
+
+::: details
 
 `chooseIndex: 0`  默认选中pickcer 的第一个元素
 ``` vue
@@ -213,8 +226,15 @@ export default {
 </style>
 
 ```
+:::
+
+* 如何使用picker
 
 index.vue
+
+::: details
+
+
 ``` vue
 <template>
 	<div>
@@ -271,8 +291,11 @@ index.vue
 </style>
 
 ```
+:::
 
 ## 中间弹窗
+::: details
+
 ``` vue
 <template>
 	<uni-popup ref="Popdialog" :type="center" :animation="true">
@@ -361,10 +384,12 @@ index.vue
 
 	this.$refs.is_Popdialog.popopen();  打开弹窗
 ```
-
+:::
 ## 时间选择器
-
 PickerTimer.nvue
+
+::: details
+
 ```js
 <template>
 	<div>
@@ -495,8 +520,6 @@ export default {
 ```js
 <picker-timer v-model="is_current_date" @dataChange="(e) => {strategy.travel_at = e}"></picker-timer>
 ```
+:::
 
-## 省市区筛选器
 
-```
-```
