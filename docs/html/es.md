@@ -543,3 +543,19 @@ export function convertImgToBase64(imageFile, callback, errorCallback) {
 	});
 }
 ```
+
+##  过滤参数空值
+
+```js
+export function cleanObject(object){
+  const result = { ...object }
+  Object.keys(result).forEach(key => {
+    const value = result[key]
+	if(!value || !value.length) {
+		 delete result[key]
+	}
+  })
+  return result
+}
+
+```
