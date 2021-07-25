@@ -150,3 +150,17 @@ this.$emit('update:myMessage',params);
 使用`sync`的时候,子组件传递的事件名必须为 `updata:value`,其中value必须与组件中的props
 中声明的名称完全一致
 :::
+
+## @keyup.enter.native 回车聚焦
+使用场景 :: 用户名回车自动聚焦到密码框
+
+用户框里放：@keyup.enter.native="keyupClick"
+
+密码框里放:：ref="mima"
+```js
+ keyupClick () {
+    this.$refs.mima.focus()
+  },
+```
+
+## @click.native.prevent 阻止默认事件

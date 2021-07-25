@@ -27,7 +27,6 @@ module.exports = {
             'html/css',
             'html/uniapp',
             'html/linux',
-            'html/vim',
             'html/vue',
             'html/vuecli'
           ]
