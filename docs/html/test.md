@@ -567,11 +567,6 @@ let param = {
 			})
 		}
 	},
-	hanlderSuperior (deptsValue) {
-		request.setPath('/api/dept/superior', true).post(deptsValue).then(res => {
-			this.deptsList = res.content
-		})
-	},
 ```
 修改后
 将公共的部分提出去
