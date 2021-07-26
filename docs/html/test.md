@@ -541,3 +541,57 @@ let param = {
 	this.chooseName = nick_name || real_name || phonenum(phonenum);
 
 ```
+## async
+修改前
+```js
+ handleDept () {
+		request.setPath('/api/dept', true).get({ enabled: true }).then(res => {
+			this.deptsList = res.content.map(item => {
+				if (item.hasChildren) {
+					item.children = null
+				}
+				return item
+			})
+		})
+	},
+	loadDepts ({ action, parentNode, callback }) {
+		if (action === LOAD_CHILDREN_OPTIONS) {
+			request.setPath('/api/dept', true).get({ enabled: true, pid: parentNode.id }).then(res => {
+				parentNode.children = res.content.map(function (obj) {
+					if (obj.hasChildren) {
+						obj.children = null
+					}
+					return obj
+				})
+				setTimeout(callback, 200)
+			})
+		}
+	},
+	hanlderSuperior (deptsValue) {
+		request.setPath('/api/dept/superior', true).post(deptsValue).then(res => {
+			this.deptsList = res.content
+		})
+	},
+```
+修改后
+将公共的部分提出去
+```js
+  async handleGetDept(pid = '') {
+		const res = await request.setPath('/api/dept', true).get({ enabled: true, pid })
+		return res.content.map(item => {
+			if (item.hasChildren) {
+				item.children = null
+			}
+			return item
+		})
+	},
+	async handleDept() {
+		this.deptsList = await this.handleGetDept()
+	},
+	async loadDepts({ action, parentNode, callback }) {
+		if (action === LOAD_CHILDREN_OPTIONS) {
+			parentNode.children = await this.handleGetDept(parentNode.id)
+			setTimeout(callback, 200)
+		}
+	},
+```
