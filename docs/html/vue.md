@@ -150,7 +150,17 @@ this.$emit('update:myMessage',params);
 使用`sync`的时候,子组件传递的事件名必须为 `updata:value`,其中value必须与组件中的props
 中声明的名称完全一致
 :::
+## Vue.$set()
 
+Vue 不允许在已经创建的实例上动态添加新的根级响应式属性 (root-level reactive property)。然而它可以使用 Vue.set(object, key, value) 方法将响应属性添加到嵌套的对象上
+
+```js
+this.$set(this.student, 'age' ,15)
+```
+```js
+this.student.age = '15'
+this.student = Object.assign({}, this.student)
+```
 ## @keyup.enter.native 回车聚焦
 使用场景 :: 用户名回车自动聚焦到密码框
 
