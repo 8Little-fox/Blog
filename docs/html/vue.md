@@ -138,11 +138,35 @@ export default {
 ## vue.sync
 
 `v-bind` 修饰符 .sync
+子组件向父组件传值
+
+子组件
+```js 
+<template>
+  <div>
+    子组件
+    <el-button @click="$emit('update:money', money - 100)">sycn</el-button>
+  </div>
+</template>
+<script>
+  export default {
+    props:['money']
+  }
+</script>
+
+```
+
+父组件
 ```js
-//父组件
-<comp :myMessage.sync="bar"></comp>
-//子组件
-this.$emit('update:myMessage',params);
+<template>
+  <SyncText :money.sync="money"/>
+  {{money}}
+</template>
+data () {
+  return {
+    money:''
+  }
+}
 ```
 
 ::: warning
