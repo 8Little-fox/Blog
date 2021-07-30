@@ -78,8 +78,8 @@ Object.keys(obj) // ["2", "7", "100"]
 
 如果属性名的类型是`Symbol`，那么逻辑同`String`相同
 
-## includes()
-## indexOf()
+## Array.prototype.includes()
+## Array.prototype.indexOf()
 
 <b>Array.prototype.includes</b>
 
@@ -352,7 +352,7 @@ const merged = {...obj1, ...obj2};
 const merged = Object.assign({}, obj1, obj2);
 ```
 
-## reduce()
+## Array.prototype.reduce()
 
 `reduce()`函数接受四个参数
 
@@ -402,7 +402,7 @@ arr.reduce((acc,cur)=>{
 },[])
 ```
 
-## Set()
+## Array.prototype.set()
 
 Set是es6新增的数据结构，<b>类似数组</b> ，但它的一大特性就是 <b> 所以元素都是唯一的 </b> 没有重复的值
 
@@ -414,7 +414,7 @@ let setArr = new Set(arr)
 //Set(5) { 1, 2, 4, 5, 6 }
 ```
 
-## Find()
+## Array.prototype.find()
 
 通过 `find` 进行匹配，匹配完成后对 `this.squareItem` 中的值进行修改
 ```js
@@ -424,138 +424,186 @@ const arr = this.squareItem.find(i => i.id == arr_id)
 arr.comment_num = comment_num
 ```
 
-
-## queryString
-
-获取参数
-```js
-var url = 'https://www.baidu.com/s?name=123&phone=234';
-const queryString = function (){
-    const result = {}
-    const index = url.indexOf('?')
-    const baseUrl = url.slice(index + 1)
-    baseUrl.split('&').forEach((item) =>{
-        const [ key ,value ] = item.split('=')
-        result[key] = result[key] ? (Array.isArray(result[key]) ? [...result[key],value] : [result[key],value]) :value
-        // result[key] = value
-    })
-    console.log(result); //{ name: '123', phone: '234' }
-
-}
-queryString()
-```
-
-给指定参数名，获取参数值
+## 常用正则表达式
 
 ```js
-var url = 'https://www.baidu.com/s?id=123&name=why&phone=13876769797';
-function queryString (name) {
-    var strs = '' ;
-    const index = url.indexOf('?')
-    if(index === -1){
-        return undefined
-    }
-    strs = url.substring(index + 1).split('&')
-    console.log(strs);  //[ 'id=123', 'name=why', 'phone=13876769797' ]
-    for(let index=0;index < strs.length ;index++){
-        var splitItem = strs[index].split('=')
-        if(splitItem[0] == name){
-            return splitItem[1]
-        }
-    }
+/**
+ * @描述 正则表达式
+ */
+export function regexpCheck(mode) {
+	let regexp = ""
 
-}
-console.log(queryString('phone')); //13876769797
-```
-
-## base64转图片 
-首先将视频第一帧转成base64 ,扔到七牛云获取新的图片
-```js
-// 从相册中选择视频
-uploadVide() {
-    getQiniuToken();
-    videoalbum().then(res => {
-        const video = res
-        uni.request({
-            url: res + "?vframe/jpg/offset/1/w/300",
-            method: 'GET',
-            responseType: 'arraybuffer',
-            success: res => {
-                videoImg(uni.arrayBufferToBase64(res.data)).then(result => {
-                    console.log('result',result);   //第一帧转图片
-                    let obj = {
-                        type: "video",
-                        data: video,
-                        frame: result
-                    };
-                    this.media_json.push(obj);
-                    this.userAdd = false;
-                    this.closeHide();
-                })
-            }
-        });
-    });
-},
-export function videoImg(pic) {
-	var md5 = require('md5');
-	var random = Math.random().toString(36).substr(2).toUpperCase()
-	var timestamp = new Date().getTime();
-	return new Promise(resolve=> {
-		commonApiList.commonGetQiniuToken({
-			random_str: random,
-			time_sec: timestamp,
-			signature: md5(random + timestamp + "xRASvX7DQnthwVCEGmmqeDd33y5G5hrb")
-		}).then(res => {
-			var url = "https://up-z2.qiniup.com/putb64/-1"; //非华东空间需要根据注意事项 1 修改上传域名
-			var xhr = new plus.net.XMLHttpRequest();
-		 
-			xhr.open("POST", url, true);
-			xhr.setRequestHeader("Content-Type", "application/octet-stream");
-			xhr.setRequestHeader("Authorization", `UpToken ${res.data}`);
-			xhr.send(pic);
-			xhr.onreadystatechange = () => {
-				if (xhr.readyState == 4) {
-					resolve(getImgRealUrl(JSON.parse(xhr.responseText).key))
-				}
+	switch (mode) {
+		case 'name':
+			regexp = /^[\u4E00-\u9FA5\uf900-\ufa2d·s]{2,20}$/
+			return {
+				regexp, title: '中文姓名'
+			};
+		case "phone":
+			regexp = /^(13[0-9]|14[01456879]|15[0-35-9]|16[2567]|17[0-8]|18[0-9]|19[0-35-9])\d{8}$/
+			return {
+				regexp, title: '手机号'
+			};
+		case "身份证":
+			regexp =
+				/(^[1-9]\d{5}(18|19|([23]\d))\d{2}((0[1-9])|(10|11|12))(([0-2][1-9])|10|20|30|31)\d{3}[0-9Xx]$)|(^[1-9]\d{5}\d{2}((0[1-9])|(10|11|12))(([0-2][1-9])|10|20|30|31)\d{2}$)/
+			return {
+				regexp, title: '身份证'
+			};
+		case "护照":
+			regexp = /^([a-zA-z]|[0-9]){5,17}$/
+			return {
+				regexp, title: "护照"
+			};
+		case "港澳通行证":
+			regexp = /^[CW]\d{8}$/
+			return {
+				regexp, title: "港澳通行证"
+			};
+		case "军人证":
+			regexp = /^[\u4E00-\u9FA5](字第)([0-9a-zA-Z]{4,8})(号?)$/
+			return {
+				regexp, title: "军人证"
+			};
+		case "统一社会信用代码":
+			regexp = /^([0-9A-HJ-NPQRTUWXY]{2}\d{6}[0-9A-HJ-NPQRTUWXY]{10}|[1-9]\d{14})$/
+			return {
+				regexp, title: "统一社会信用代码"
 			}
-		})
-	})
-}
-// 转换真实地址
-export function getImgRealUrl(key) {
-	return "http://clouddriver.xx.xx/" + key;
-}
-
-```
-
-## 图片转base64
-```js
-export function convertImgToBase64(imageFile, callback, errorCallback) {
-	var toBase64Url;
-	uni.request({
-		url: imageFile,
-		method: 'GET',
-		responseType: 'arraybuffer',
-		success: async res => {
-			let base64 = uni.arrayBufferToBase64(res.data); //把arraybuffer转成base64
-			toBase64Url = 'data:image/jpeg;base64,' + base64; //不加上这串字符，在页面无法显示
-		}
-	});
-}
-```
-
-##  过滤参数空值
-
-```js
-export function cleanObject(object){
-  const result = { ...object }
-  Object.keys(result).forEach(key => {
-    const value = result[key]
-	if(!value || !value.length) {
-		 delete result[key]
+        case "邮箱地址":
+			regexp = /^[a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/
+			return {
+				regexp, title: "邮箱地址"
+			}
 	}
-  })
-  return result
 }
+```
+## 函数递归之数组扁平化
+```js
+const arr = [1, [2, [3, [4, 5]]], 6];
+const items = []
+const fn = arr => {
+  for (let i = 0; i < arr.length; i++) {
+    if(Array.isArrray(arr[i])){
+      fn(arr[i])
+    } else {
+      items.push(arr[i])
+    }
+  }
+}
+console.log(items) //[ 1, 2, 3, 4, 5, 6 ]
+```
+
+## 数组常用运算
+
+* 数组交集
+```js
+const arr1 = [1,2,3,4,5,7,8,9]
+const arr2 = [7,8,9]
+const inter = arr1.filter(function(val){
+    return arr2.indexOf(val) > -1
+})
+console.log(inter);  //[7,8,9]
 
 ```
+* 数组对象交集
+`some()` 方法用于检测数组中的元素是否满足指定条件（函数提供）
+
+`some()` 方法会依次执行数组的每个元素：
+
+* 如果有一个元素满足条件，则表达式返回true , 剩余的元素不会再执行检测。
+* 如果没有满足条件的元素，则返回false。
+> 注意： some() 不会对空数组进行检测。 不会改变原始数组
+
+```js
+const arr1 = [
+    { name: 'name1', id:1},
+    { name: 'name2', id:2}
+]
+const arr2 = [
+    { name: 'name1', id:1},
+]
+const result = arr1.filter(function(val){
+    return arr2.some( n => JSON.stringify(n) === JSON.stringify(val))
+})
+console.log(result);//{ name: 'name1', id:1}
+```
+
+* 数组差集
+
+数组arr1 相对于 arr2 所没有的
+
+`has()` 方法返回一个布尔值来指示对应的值value 是否存在Set对象中
+```js
+const arr1 = [1,2,3,4,5,7,8,9]
+const arr2 = [7,8,9]
+const diff = arr1.filter(item => new Set(arr2).has(item))
+//[ 7,8,9]
+```
+* 数组对象差集
+`every() ` 方法测试一个数组内的所有元素是否都能通过某个指定函数的测试。它返回一个布尔值。
+
+* 如果数组中检测到有一个元素不满足，则整个表达式返回 false ，且剩余的元素不会再进行检测。
+
+* 如果所有元素都满足条件，则返回 true。
+```js
+const arr1 = [
+    { name: 'name1', id:1},
+    { name: 'name2', id:2}
+]
+const arr2 = [
+    { name: 'name1', id:1},
+]
+const result = arr1.filter(function(v){
+    return arr2.every( n => JSON.stringify(n) === JSON.stringify(v)) 
+})
+console.log(result);
+```
+
+* 数组并集
+首先过滤出arr1 不等于arr2 的，然后在将数组合并成一个
+```js
+const arr1 = [1,2,3,4,5,7,8,9]
+const arr2 = [7,8,9]
+const inter = arr1.concat(arr2.filter(v =>!arr1.includes(v)))
+console.log(inter);
+
+```
+
+
+## 强制类型转换
+
+::: tip
+显示强制类型转换 ：发生在静态类型语言的编译阶段	
+
+隐式强制类型转换：发生在动态语言的运行时
+:::
+
+```js
+var a = 42
+var b = a + '' //隐式强制类型转换
+var c = String(a) //显示强制类型转换
+
+```
+
+隐式强制类型转换
+
+
+::: tip
+
+运算符+可以隐式将数字转换为字符串
+
+运算符-可以隐式的将字符串转换为数字
+:::
+
+```js
+// 隐式强制类型转换形式一：运算符
+var a = 42;
+var b = '0';
+
+var c = a + b;
+var d = c - 0;
+console.log(c); // 输出"420"
+console.log(d); // 输出420
+```
+

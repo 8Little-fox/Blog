@@ -15,20 +15,16 @@ module.exports = {
     sidebar: {
       '/html': [
         {
-          title: 'llsun',
+          title: '前端基础知识',
           collapsable: true,
           children: [
+            'html/es',
+            'html/tools',
+            'html/vue',
             'html/test',
             'html/problems',
-            'html/vuex',
-            'html/iptForm',
-            'html/es',
-            'html/array',
-            'html/css',
-            'html/uniapp',
-            'html/linux',
-            'html/vue',
-            'html/vuecli'
+            // 'html/iptForm',
+            'html/uniapp'
           ]
         }
       ]
