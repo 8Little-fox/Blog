@@ -555,6 +555,7 @@ export default {
             lastName: "旋"
         }
     },
+    //
     computed: {
         fullName() {
             return this.firstName + ' ' + this.lastName
@@ -562,6 +563,22 @@ export default {
     }
 }
 </script>
+```
+get()  通过其他的值设置一个新值
+set()  通过获取一个值来改变它相关联的值之后引起`fullName`的重新变化
+```js
+    computed: {
+        fullName: {
+          get: function () {
+            return this.firstName + ' ' + this.lastName
+          },
+          set: function (val) {
+            const arr = val.split(' ')
+            this.firstName = arr[0]
+            this.lastName = arr[1]
+          }
+        }
+    }
 ```
 
 ::: tip
@@ -609,16 +626,24 @@ data () {
 :::
 
 ## Vue.$set()
-
 Vue 不允许在已经创建的实例上动态添加新的根级响应式属性 (root-level reactive property)。然而它可以使用 Vue.set(object, key, value) 方法将响应属性添加到嵌套的对象上
 
-
+* 实现数据动态响应
+对象响应式数据
 ```js
 this.$set(this.student, 'age' ,15)
 ```
 ```js
 this.student.age = '15'
 this.student = Object.assign({}, this.student)
+```
+数组响应式数据
+```js
+this.$set(this.problemDataScouce[index], "isDisabled", item.isDisabled)
+```
+delete只是被删除的元素变成了 empty/undefined 其他的元素的键值还是不变。 Vue.delete 直接删除了数组 改变了数组的键值。
+```js
+Vue.delete(item,'price')
 ```
 ## @keyup.enter.native 回车聚焦
 使用场景 :: 用户名回车自动聚焦到密码框
@@ -632,4 +657,3 @@ this.student = Object.assign({}, this.student)
   },
 ```
 
-## @click.native.prevent 阻止默认事件

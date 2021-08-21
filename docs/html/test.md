@@ -590,3 +590,27 @@ let param = {
 		}
 	},
 ```
+修改前
+```js
+const slotsScoped = slots ? {
+  scopedSlots: {
+    default: (scope) => slotsFn({ ...scope, value: scope.row[dataIndex] })
+  }
+} : dict && {
+  scopedSlots: {
+    default: (scope) => (<span>{ dicts[dict][String(scope.row[dataIndex])]}</span>)
+  }
+}
+```
+修改后
+
+```js
+const slotsScoped = (slots || dict) && {
+  scopedSlots: {
+    default: (scope) => {
+      const value = scope.row[dataIndex]
+      return slots ? slotsFn({ ...scope, value }) : (<span>{ dicts[dict][String(value)]}</span>)
+    }
+  }
+}
+```
