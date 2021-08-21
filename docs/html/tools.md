@@ -97,6 +97,22 @@ const queryString = function (){
 }
 queryString()
 ```
+```js
+function getQueryString() {
+  const url = 'https://dongaohui-file.qrqy.net/upload_pic_200017-16228080178825.jpg'
+  if (url) {
+    let strs = ''
+    const index = url.lastIndexOf('/')
+    if (index === -1) {
+      return url
+    }
+    strs = url.substring(index).split('/')
+    console.log('图片后缀', strs[1])
+    return strs[1]
+  }
+};
+getQueryString()  //upload_pic_200017-16228080178825.jpg
+```
 
 给指定参数名，获取参数值
 
