@@ -141,6 +141,40 @@ Object.values(obj).forEach(value =>{ console.log(value); // 输出1, 2, 3})
 
 ```
 
+## Object.some()
+
+* some()方法测试数组中是不是至少有1个元素通过了被提供的函数测试。它返回的是一个Boolean类型的值。
+```js
+let arr = [
+  { value: 'apply' },
+  { value: '' }
+]
+let res = arr.some(item => item.value !== '' )
+```
+
+## Object.every()
+
+* every()方法测试一个数组内的所有元素是否都能通过某个指定函数的测试。它返回一个布尔值。
+```js
+const arr = [
+  { value: 'apply' },
+  { value: '1' }
+]
+const res = arr.every(item => item.value !== '')
+```
+## Object.find()
+
+* find()方法返回数组中满足提供的测试函数的第一个元素的值。否则返回 undefined
+```js
+const arr = [
+  { value: '' },
+  { value: '11' }
+]
+const res = arr.find(item => item.value !== '')
+
+```
+
+
 `Object.entries()`
 
 使用`Object.entries()`遍历对象的属性名和属性值:
