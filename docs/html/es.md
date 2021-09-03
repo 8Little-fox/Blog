@@ -504,8 +504,13 @@ export function regexpCheck(mode) {
 			return {
 				regexp, title: "统一社会信用代码"
 			}
-        case "邮箱地址":
+    case "邮箱地址":
 			regexp = /^[a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/
+			return {
+				regexp, title: "邮箱地址"
+			}
+    case "邮箱格式":
+			regexp = /^\w+((-\w+)|(\.\w+))*@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z0-9]+$/
 			return {
 				regexp, title: "邮箱地址"
 			}

@@ -614,3 +614,72 @@ const slotsScoped = (slots || dict) && {
   }
 }
 ```
+
+## Vuex存省市区
+
+```js
+async getNewCity() {
+	this.loading = true;
+	try {
+		let cityList = [];
+		// 如果Vuex中有存储
+		const { data } = await CommonApi.getCity({ type: this.selectType });
+		this.$store.commit('common/M_COMMON_SET_CITYLIST', [...data]);
+		cityList = data;
+
+		if (this.isWholeCountry) {
+			cityList.unshift({ id: 0, name: '全国' });
+		}
+		this.options = cityList;
+	} catch (error) {
+		this.$message.error(error.data?.message || '服务器错误');
+	}
+	this.loading = false;
+},
+
+```
+store
+```js
+export default {
+	state: {
+		cityList: []  // 省市列表
+	},
+	mutations: {
+		[M_COMMON_SET_CITYLIST](state, cityList) {
+			state.cityList = cityList;
+   	}
+	}
+}
+```
+
+## 选中状态切换
+
+```html
+<div @click="handlerBtn(1)" :class="['order-btn', {'order-btn-active': type === 1}]">A</div>
+<div @click="handlerBtn(2)" :class="['order-btn', {'order-btn-active': type === 2}]">B</div>
+<div @click="handlerBtn(3)" :class="['order-btn', {'order-btn-active': type === 3}]">C</div>
+handlerBtn(val) {
+	this.type = val
+}
+```
+```css
+  .order-btn {
+    width: 150px;
+    height: 30px;
+    cursor: pointer;
+    border: 1px solid #d9d9d9;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #ffffff;
+    transition: background-color 0.1s linear, color 0.1s linear;
+  }
+  .order-btn-active:hover {
+    background-color: #1890ff;
+    color: #ffffff;
+  }
+  .order-btn-active {
+    background-color: #1890ff;
+    color: #ffffff;
+  }
+```

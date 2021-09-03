@@ -122,3 +122,10 @@ bug.$on('msg',val => {
 	console.log(val)
 })
 ```
+
+## window.open()
+
+* 打开pdf预览
+```js 
+window.open('https://yuedian.tos-cn-beijing.volces.com/files/612c96ec8e0631630312172.pdf')
+```
