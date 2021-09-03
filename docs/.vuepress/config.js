@@ -21,6 +21,8 @@ module.exports = {
             'html/es',
             'html/tools',
             'html/vue',
+            'html/Vuex',
+            'html/Pinia',
             'html/test',
             'html/problems',
             // 'html/iptForm',
