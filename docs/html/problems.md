@@ -1,4 +1,6 @@
 # 前端面试题
+## vue 响应式原理
+* 当创建 Vue 实例时,vue 会遍历 data 选项的属性,利用 Object.defineProperty 为属性添加 getter 和 setter 对数据的读取进行劫持（getter 用来依赖收集,setter 用来派发更新）,并且在内部追踪依赖,在属性被访问和修改时通知变化
 
 ## SPA 单页面应用都有什么优缺点呢？
 
@@ -11,14 +13,39 @@
 
 ## v-show / v-if 区别
 
-* v-if :	惰性, 如果初次渲染时条件为假 v-if并没有完全销毁，只是成为注释节点
+* v-if :	惰性, 如果初次渲染时条件为假 v-if并没有完全销毁，只是成为注释节点,条件不满足时不渲染此节点
 
-* v-show : 简单的CSS 的 "diaplay" 属性进行切换
+* v-show : display:none 将对应节点隐藏
 
 ## 谈谈你的Vue 单向数据流的理解
 *	父子组件间形成一个单向下行的绑定，父级prop 的更新会向下流动到子组件，反过来不行。
 	每次父组件发生变更时，子组件中所有的prop 都将会刷新为最新的值
 	子组件想修改时，只能通过 $emit 派发一个自定义事件，父组件接收到后，由父组件修改
+
+## 如何判断数据类型
+* instanceof 判断对象和数组
+
+* toString.call() 对哪一种类型都管用
+
+* typeof 
+
+## localStore，sessionStore，cookie区别
+* localStore 永久缓存，只要不清楚就一直存在
+sessionStore 只在当前会话中存在离开就会清楚
+cookie 浏览器中存在，后期可以设置清楚时间，会跟随请求携带请求头
+
+## Get post区别
+* 名字区别
+* 缓存，get方法会被浏览器缓存，留下历史记录，参数get 拼接的url 不太安全，post 放在请求体中
+
+## 为什么https 更安全
+* https 在传输的过程中经过了一层加密/tsl安全层，http属于明文传输
+
+## 行内元素转为块级元素的方法
+* display, float , position. display:inline-block强制转为块级元素
+
+## 如何获取dom
+* document. getElementById()id名/标签名/类名 querySelector
 ## computed 和 watch 的区别
 
 *	computed： 是计算属性，依赖其它属性值，并且 computed 的值有缓存，只有它依赖的属性值发生改变，
@@ -128,4 +155,42 @@ bug.$on('msg',val => {
 * 打开pdf预览
 ```js 
 window.open('https://yuedian.tos-cn-beijing.volces.com/files/612c96ec8e0631630312172.pdf')
+```
+
+## vue中non-props属性
+
+> 就是说在父组件中给子组件传递值，但是子组件不在prop中接受
+
+1: 子组件存在单个节点时，底层会将父组件传递过来的内容置于子组件最外层dom 标签上，变成子组件最外层dom标签上的一个属性，如果不希望在子组件标签上展示该属性，可以通过 inheritAttrs: false，会禁止继承
+
+2: 子组件存在多个字节点时，如果让non-props生效 可以使用` v-bind = “$attrs”`,把父组件传递过来的所有non-props属性放在指定div上,也可以具体某个属性如 `:msg="$attrs.name"`
+
+3: 不管inheritAttrs: false/true, 子组件中都能通过 $attrs属性获取父组件传递过来的属性默认值为true
+
+
+## 如何实现异步组件
+
+* 在大型应用中，我们可能需要将应用分割成小一些的代码块，并且只在需要的时候才从服务器加载一个模块，
+* 为了简化，Vue 允许你以一个工厂函数的方式定义你的组件，这个工厂函数会异步解析你的组件定义。
+* Vue 只有在这个组件需要被渲染的时候才会触发该工厂函数，且会把结果缓存起来供未来重渲染。以下有两种实现方法
+
+方法一： 
+```js
+components: {
+	List: () => import(/* webpackChunkName:'list' */ './List')
+}
+```
+
+方法二：
+
+自定义异步组件
+```js
+const AsyncList = () => ({
+	component: import(/* webpackChunkName:'list' */ './List')
+	Loading: true,
+	timeout: 3000
+})
+components: {
+	AsyncList
+}
 ```

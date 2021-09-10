@@ -514,6 +514,8 @@ export function regexpCheck(mode) {
 			return {
 				regexp, title: "邮箱地址"
 			}
+    case "小数点后两位":
+      regexp = /^[0-9]+(.[0-9]{2})?$/
 	}
 }
 ```

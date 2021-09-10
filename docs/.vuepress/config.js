@@ -21,6 +21,7 @@ module.exports = {
             'html/es',
             'html/tools',
             'html/vue',
+            'html/vue3.0',
             'html/Vuex',
             'html/Pinia',
             'html/test',
