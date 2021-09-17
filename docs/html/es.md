@@ -71,6 +71,31 @@ const obj = {
 }
 Object.keys(obj) // ["2", "7", "100"]
 ```
+
+* 过滤对象中的 value = 0 并将其置为空
+
+```js
+let params = {
+  name: 0,
+  age: 0,
+  work: 'frontend'
+}
+方法一： 
+for (let item in params) {
+  if (typeof (params[item]) === "number" && (params[item]) === 0) {
+    params[item] = params[item].replace = ''
+  }
+}
+
+方法二： 
+Object.keys(params).forEach((key,index) => {
+  if(params[key] === 0) {
+    params[key] = ''
+  }
+});
+// params  { name: '', age: '', work: 'frontend' }
+
+```
 > 
 如果属性名的类型是`Number`，那么`Object.keys`返回值是按照key从小到大排序
 
