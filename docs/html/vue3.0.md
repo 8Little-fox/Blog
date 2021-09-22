@@ -47,13 +47,120 @@ setup(){
   const a = ref(1)
   const b = reactive({ a: 1 })
 
+  //监听 ref数据
   watch(a, (newValue, oldValue) => {
       console.log('---a', newValue, oldValue)
-    })
+  })
+  //监听 reactive 数据 返回一个函数
   watch(() => b.a, (newValue, oldValue) => {
     console.log('---b', newValue, oldValue)
   })
+  //同时监听多个值
+  watch([() => b.a,() => b.c],([newa,newb],[olda,oldb])=> {
+    console.log(newa,olda,'----',newb,oldb );
+  })
 }
+```
+## watchEffect
+
+* 立即执行，没有惰性
+* 不需要传递你要监听的内容，自动会感知依赖
+* 不能获取之前的数据（oldValue）
+## todoList
+* 举个栗子🌰 
+
+```html
+ 子组件 todoList
+<input type="text" :value="iptValue" @input="handlerInput" />
+<button @click="handlerBtn(iptValue)">add</button>
+<ul style="width: 400px; margin: 0 auto">
+<li v-for="item of list" :key="item">
+  {{ item }}
+</li>
+</ul>
+```
+```js
+import { ref, reactive } from "vue";
+//list列表
+const listReativeEffect = (iptValue) => {
+  const list = reactive([]);
+  const handlerBtn = (item) => {
+    if(!iptValue.value) {
+      alert('输入框内容不能为空')
+      return;
+    }
+    list.push(item);
+  };
+  return {
+    list,
+    handlerBtn,
+  };
+};
+//input 
+const iptReativeEffect = () => {
+  const iptValue = ref('');
+  const handlerInput = (e) => {
+    iptValue.value = e.target.value;
+  };
+  return {
+    iptValue,
+    handlerInput
+  }
+};
+export default {
+  setup() {
+    const { iptValue, handlerInput } = iptReativeEffect();
+
+    const { list, handlerBtn } = listReativeEffect(iptValue);
+
+    return {
+      list,
+      handlerBtn,
+      iptValue,
+      handlerInput,
+    };
+  },
+};
+```
+
+## Vuex
+
+```js
+import { useStore } from "vuex"
+
+const store = useStore()
+const { name } = toRefs(store.state);
+const handlerChange = () => {
+  // 方法一： 直接通过commit 改变数据
+  // store.commit('NAME', 'Hello12121212')
+  // 方法二： 通过dispatch 方法派发一个action,改变数据
+  store.dispatch('handlerChange','LL')
+}
+
+```
+index.js
+
+```js
+import { createStore } from "vuex";
+
+export default createStore({
+  state() {
+    return {
+      name: "Hello"
+    }
+  },
+  mutations: {
+    NAME(state,str) {
+      console.log(state,str);
+      state.name = str
+    }
+  },
+  actions: {
+    handlerChange(state, str) {
+      this.commit('NAME',str)
+    }
+  }
+})
 ```
 ## 组件通信
 

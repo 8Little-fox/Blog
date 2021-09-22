@@ -1,7 +1,12 @@
 
 # Vuex
 
-异步
+* dispatch 方法派发一个action, 名字叫做 `setPersonParameter`
+* 感知到 `setPersonParameter` 这个action，执行store 中的actions 的`setPersonParameter`
+* commit 提交一个 名字为`personParameter` 的数据改变
+* mutation 感知到提交的  `personParameter`改变，执行personParameter方法改变数据
+
+异步 
 ```js
 const store = new Vuex.Store({
 	state: {
