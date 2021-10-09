@@ -194,3 +194,9 @@ components: {
 	AsyncList
 }
 ```
+
+## 动态图标渲染
+
+```js
+ <i class="iconfont" v-html="item.icon" />
+```

@@ -162,6 +162,65 @@ export default createStore({
   }
 })
 ```
+
+## Vue-router 
+
+`main.js` 中引用router 并挂载
+
+`beforeEnter` 路由守卫 ，路由跳转前执行某个操作
+
+router.js
+```js
+import { createRouter, createWebHashHistory } from 'vue-router'
+
+const routes = [
+  {
+    path: '/',
+    name: 'Home',
+    component: import(/* webpackChunkName: "about" */ '../views/home/index.vue')
+  },
+  {
+    path: '/login',
+    name: 'Login',
+    component: import(/* webpackChunkName: "about" */ '../views/login/index.vue'),
+    beforeEnter (to, from, next) {
+      const { isLogin } = localStorage
+      isLogin ? next({ path: '/' }) : next()
+    }
+  }
+]
+
+const router = createRouter({
+  history: createWebHashHistory(),
+  routes
+})
+
+router.beforeEach((to, form, next) => {
+  const { isLogin } = localStorage
+  isLogin || to.name === 'Login' ? next() : next({ name: 'Login' })
+})
+export default router
+
+```
+
+Login.vue 页面中使用
+
+引入的useRoute,useRouter 相当于vue2的 this.$route()，this.$router()
+点击按钮就能跳转到home.vue页面了
+```js
+import { useRouter } from 'vue-router'
+export default {
+  name: 'Login',
+  setup () {
+    const router = useRouter()
+    const toHome = () => {
+      localStorage.isLogin = true
+      router.push({ path: '/' })
+    }
+    return { toHome }
+  }
+}
+```
 ## 组件通信
 
 * props
