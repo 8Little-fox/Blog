@@ -25,6 +25,7 @@ module.exports = {
             'html/Vuex',
             'html/Pinia',
             'html/test',
+            'html/git',
             'html/problems',
             // 'html/iptForm',
             'html/uniapp'

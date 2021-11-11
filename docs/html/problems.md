@@ -200,3 +200,23 @@ components: {
 ```js
  <i class="iconfont" v-html="item.icon" />
 ```
+
+## 生成随机十六进制颜色
+
+```js
+const randomHex = () => `#${Math.floor(Math.random() * 0xffffff).toString(16).padEnd(6, "0")}`
+console.log(randomHex());
+//Result: #92b008
+
+```
+
+## 修改富文本中图片的高度
+
+```html
+<div class="count" v-html="text"></div>
+<style>
+.count img {
+//宽， 高
+}
+</style>
+```
