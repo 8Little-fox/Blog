@@ -615,6 +615,37 @@ const slotsScoped = (slots || dict) && {
 }
 ```
 
+修改前
+```js
+if('请选择其中一项') {
+ wx.showToast({
+				title,
+				icon: 'none'
+		})
+}
+if('请输入您的答案') {
+ wx.showToast({
+				title,
+				icon: 'none'
+		})
+}
+```
+
+修改后
+type 对应的是 1，2，3
+```js
+	if ('判断条件') {
+			return wx.showToast({
+					title: {
+							1: '请选择其中一项',
+							2: `请选择${config && config?.option_number?.min}～${config && config?.option_number?.max}项`,
+							3: '请输入您的答案',
+					} [type],
+					icon: 'none'
+			})
+	}
+```
+
 ## Vuex存省市区
 
 ```js

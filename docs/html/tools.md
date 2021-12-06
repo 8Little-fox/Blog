@@ -235,3 +235,52 @@ export function cleanObject(object){
 
 * 深拷贝是将一个对象从内存中完整的拷贝一份出来,从堆内存中开辟一个新的区域存放新对象,且修改新对象不会影响原对象。
 
+## 限制内容中文
+::: tip
+/**
+ * @desc 函数防抖
+ * @param {*} str 输入内容
+ * @param {*} isvalid true - 校验通过, false - 校验未通过
+ * @returns
+ */
+:::
+
+```js
+export const IsChinese = function (str) {
+  let isvalid = true
+  if (str.length != 0) {
+    const reg = /^[\u0391-\uFFE5]+$/;
+    if (!reg.test(str)) {
+      isvalid = false
+    }
+  }
+  return isvalid
+}
+```
+
+
+## 字符串实际长度
+::: tip
+/**
+ * @desc 函数防抖
+ * @param {*} str 输入内容
+ * @param {*} 获得字符串实际长度，中文2，英文1
+ * @returns
+ */
+:::
+
+```js
+export const get_length = function (str) {
+  var realLength = 0,
+    len = str.length,
+    charCode = -1;
+  for (var i = 0; i < len; i++) {
+    charCode = str.charCodeAt(i);
+    if (charCode >= 0 && charCode <= 128)
+      realLength += 1;
+    else
+      realLength += 2;
+  }
+  return realLength;
+};
+```
