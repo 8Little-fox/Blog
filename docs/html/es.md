@@ -539,8 +539,10 @@ export function regexpCheck(mode) {
 			return {
 				regexp, title: "邮箱地址"
 			}
-    case "小数点后两位":
+    case "验证只包含数字、指定范围长度（2）的单词字符串":
       regexp = /^[0-9]+(.[0-9]{2})?$/
+    case "小数点后两位":
+      regexp = /\b\d{2}\b/g
 	}
 }
 ```
