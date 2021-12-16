@@ -1,5 +1,12 @@
 # Vue 3.0
 
+## getCurrentInstance
+* 获取当前组件的实例
+```js
+import { getCurrentInstance } from 'vue'
+//获取当前组件的上下文
+const { proxy } = getCurrentInstance();
+```
 ## ref/reactive 响应式引用
 
 * 原理，通过`proxy` 对数据进行封装，当数据变化时，出发模版等内容的更新
