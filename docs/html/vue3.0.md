@@ -1,5 +1,14 @@
 # Vue 3.0
 
+## Vue3.x响应式数据原理
+* Vue3.x改用 `Proxy` 替代 ObjjectdefineProperty. 因为Proxy 可以直接监听对象和数组的变化。
+
+Proxy只会代理对象的第一层，那么Vue3又是怎样处理这个问题的呢？
+判断当前Reflect.get的返回值是否为Object ,如果是则在通过reactive 方法做代理， 这样就满足了深度观测
+
+监测数组的时候可能触发多次get/set，那么如何防止触发多次呢？
+我们可以判断key是否为当前被代理对象的target 自身属性，也可以判断旧值与新值是否相等，只要满足以上两者条件之一时，才有可能执行trigger
+
 ## getCurrentInstance
 * 获取当前组件的实例
 ```js

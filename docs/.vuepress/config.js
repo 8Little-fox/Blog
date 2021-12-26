@@ -18,6 +18,7 @@ module.exports = {
           title: '前端基础知识',
           collapsable: true,
           children: [
+            'html/problems',
             'html/es',
             'html/tools',
             'html/vue',
@@ -26,7 +27,6 @@ module.exports = {
             'html/Pinia',
             'html/test',
             'html/git',
-            'html/problems',
             // 'html/iptForm',
             'html/uniapp'
           ]

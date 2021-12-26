@@ -1,4 +1,4 @@
-# Vue2.0
+# Vue
 
 ## 从头搭建cli脚手架
 
@@ -512,3 +512,19 @@ Vue.delete(item,'price')
   },
 ```
 
+## 编写插件
+创建install.js,
+```js
+import Text from '@/components/Text'
+export default (app) => {
+ console.log('app', app);
+ app.component('Text', Text)
+}
+```
+main.js 
+
+```js
+import Text from '@/plugins/install'
+createApp(App).use(Text).mount('#app')
+```
+以上完事就可以直接在页面中使用了 

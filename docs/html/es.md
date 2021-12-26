@@ -149,7 +149,19 @@ demo.includes(NaN)       //true
 ```
 >注意：在这里，需要注意一点，includes()只能判断简单类型的数据，对于复杂类型的数据，比如对象类型的数组，二维数组，这些，是无法判断的
 
+## Array.prototype.findIndex()
+* 找到了返回索引，没找到返回-1
+```js
+const arr = [
+  { name: 'sll', age: 18},
+  { name: 'sll', age: 19},
+  { name: 'sll', age: 20}
+]
+const newValue = arr.findIndex(item => item.age === 19)
+console.log(newValue); // 1
+```
 
+## Array.prototype.fill()
 ## Object.values()
 
 Object.entries()
@@ -483,6 +495,22 @@ const arr = this.squareItem.find(i => i.id == arr_id)
 arr.comment_num = comment_num
 ```
 
+## 查找重复元素
+* 找出数组 arr 中重复出现过的元素
+```js
+function refrain(arr) {
+  let tmp = []
+  if(Array.isArray(arr)) {
+      arr.concat.sort().sort((a, b) => {
+          if(a==b && tmp.indexOf(a) === -1){
+              tmp.push(a)
+          }
+      })
+  }
+  return tmp
+}
+refrain([1, 2, 4, 4, 3, 3, 1, 5, 3]) // [1, 3, 4]
+```
 ## 常用正则表达式
 
 ```js
@@ -675,3 +703,28 @@ console.log(c); // 输出"420"
 console.log(d); // 输出420
 ```
 
+## 隐式类型转换
+值类型之间的数据类型转换:
+
+1.数字和字符串使用+运算符:
+数字和字符串如果使用+运算符进行操作，那么会将数字先转换为字符串，然后进行字符串连接操作:
+```js
+var str = 'antzone'
+var num = 8
+console.log(str+num) // antzone8
+```
+2: 布尔值参与的+运算符操作:
+如果有布尔型参与，那么首先会将布尔值转换为对应的数字或者字符串，然后再进行相应的字符串连接或者算数运算。
+```js
+var bool = true
+var num = 8
+console.log(bool+num) // 9
+```
+3: Null和Undefined参与的+运算符操作
+如果和数字进行计算，null会转化为0，undefined会转化成NaN
+```js
+console.log(undefined+1) // NaN
+console.log(null+1) // 1
+
+
+```

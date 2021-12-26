@@ -1,7 +1,13 @@
 # 前端面试题
-## vue 响应式原理
+
+## MVVM
+* MVVM是`Model-View-ViewModel` 缩写，Model层代表数据模型，View代表UI组件， ViewModel是View 和Model 的桥梁，数据会绑定到ViewModel层并自动将数据渲染到页面中，视图变化的时候会通知viewMode层更新数据
+
+## vue2.x 响应式原理
 * 当创建 Vue 实例时,vue 会遍历 data 选项的属性,利用 Object.defineProperty 为属性添加 getter 和 setter 对数据的读取进行劫持（getter 用来依赖收集,setter 用来派发更新）,并且在内部追踪依赖,在属性被访问和修改时通知变化
 
+## 组件中的data 为什么是一个函数？
+*  一个组件被复用多次的话，会创建多个实例，为了保证组件不同的实例之间data不冲突，data 必须是一个函数
 ## SPA 单页面应用都有什么优缺点呢？
 
 * 优点：
@@ -11,6 +17,20 @@
 * 缺点：
 	初次加载耗时多，SEO难度较大（所有的内容都在一个页面中动态替换显示）
 
+	## 你都做过哪些Vue的性能优化？
+	* 尽量减少data中的数据， data 中的数据会增加getter/setter,会手机对于的watcher
+	* v-if / v-for 不能连用, vue3.x中 if优先级高于for
+	* 在更多的情况下，使用v-if替代v-show
+	* SPA 页面采用keep-alive缓存组件
+	* key保证唯一
+	* 使用路由懒加载、异步组件
+	* 防抖、节流
+	* 长列表滚动到可视区域动态加载
+	* 图片懒加载
+
+## hash 路由和history 路由实现原理
+* `location.hash` 的值实际就是在URL 中的 `#` 后面的东西
+* history 主要有 `history.pushState()` 和 `history.replaceState()`
 ## v-show / v-if 区别
 
 * v-if :	惰性, 如果初次渲染时条件为假 v-if并没有完全销毁，只是成为注释节点,条件不满足时不渲染此节点
