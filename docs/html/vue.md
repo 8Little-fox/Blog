@@ -512,7 +512,7 @@ Vue.delete(item,'price')
   },
 ```
 
-## 编写插件
+## install编写插件
 创建install.js,
 ```js
 import Text from '@/components/Text'
