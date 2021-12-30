@@ -31,6 +31,40 @@
 ## hash 路由和history 路由实现原理
 * `location.hash` 的值实际就是在URL 中的 `#` 后面的东西
 * history 主要有 `history.pushState()` 和 `history.replaceState()`
+
+## $router和$route 区别
+
+* this.$router 是Vue Router 的实例方法，当导航到不同的url 时可以使用 `this.$router.push()`,这个方法会向`history`
+* 里面添加一条记录，浏览器回退按钮时 `this.$router.back()`就会回到之前的url
+
+* this.$route 相当于当前激活的路由对象, 可以从对象中获得 参数（name , path）
+
+## params和query 区别
+* query 要用path 来引入， 接受参数 this.$route.query.name 浏览器地址栏中可展示参数
+
+* params 要用name 来引入，  接受参数 this.$route.params.name  浏览器地址栏中不展示参数，页面刷新时会被清空
+
+## 登录拦截
+
+* 登录拦截的时候会先设置白名单数组，放到 main.js中，每当页面登录时会跳转到登录页
+1: 有token时判断当前的路由是否在路由表中，在路由表中继续往下走，没有路由表进行获取路由表
+2: 没有token并且当前路径在白名单中继续 next(), 不在时进行拦截进行登录页面
+
+## Vue请求是放在 Created还是Mounted ?
+
+* 首先请求是异步的，
+* Created 生命周期里Data 才生成，而返回的数据需要挂载到data上， 所以Created 里可以初始化请求的，但Dom还没有初始化
+* Mounted 生命周期里Dom才初始化完成
+* 所以请求放在Created/Mounted 都可以， 没什么区别
+
+## 防抖和节流
+
+* 防抖（debounce） 在事件触发（n） 秒后在执行回调，内秒内在触发将重新计算
+* 节流 （throttle）在规定时间内只触发一次，如果在这个时间内多次触发只有一次生效 （间隔时间执行）
+
+## map和filter 区别
+* map 返回一个组装后的新数组
+* filter 返回的数组是基于原数组的，数据结构一致
 ## v-show / v-if 区别
 
 * v-if :	惰性, 如果初次渲染时条件为假 v-if并没有完全销毁，只是成为注释节点,条件不满足时不渲染此节点
