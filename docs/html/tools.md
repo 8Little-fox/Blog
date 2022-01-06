@@ -3,6 +3,7 @@
 ## 函数防抖
 ::: tip
 /**
+ * 在事件触发（n）秒后执行回调，n 秒内触发重新计算
  * @desc 函数防抖
  * @param {*} func 目标函数
  * @param {*} wait 延迟执行毫秒数
@@ -41,6 +42,7 @@ window.onresize = debounce(function() {
 ## 函数节流
 ::: tip
 /**
+ * 在规定时间内只触发一次
  * @author lls
  * @param {*} func 目标函数
  * @param {*} wait 延迟执行毫秒数
