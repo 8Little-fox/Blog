@@ -92,6 +92,182 @@
 1 可以将复杂的功能拆解，便于后期维护和迭代
 2 解决跨项目服用问题，避免代码重复开发
 3 统一代码质量，可以在快速开发的同时保证代码质量
+
+## Promise.all（只要失败一个就不会走then）的解决方案
+* 解决： 在catch里面resolve就行了
+```js
+ var p1 = new Promise(resolve => {
+        let p1Data = b;
+        resolve(p1Data)
+    }).catch(err => {
+        return Promise.resolve("P1 无数据")
+    })
+
+    var p2 = new Promise(resolve => {
+        let p2Data = 'p2的有数据';
+        resolve(p2Data)
+    }).catch(err => {
+        return Promise.resolve("P2 无数据")
+    })
+
+    Promise.all([p1, p2]).then(res => {
+        console.log(res);
+    }).catch(err => {
+        throw new Error("Promise 执行错误", err)
+    })
+```
+
+## promise与async和await的区别
+
+async/await是写异步代码的新方式
+async/await是基于Promise实现的，它不能用于普通的回调函数。
+async/await与Promise一样，是非阻塞的。
+async/await使得异步代码看起来像同步代码，这正是它的魔力所在。
+## 关于异步函数的吐槽
+异步函数很常见，经常是用 Promise 来实现
+
+如果这样调用异步函数，易形成地狱回调！
+```js
+const fn1 = () =>{
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      resolve(1);
+    }, 300);
+  });
+}
+const fn2 = () =>{
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      resolve(2);
+    }, 600);
+  });
+}
+const fn = () =>{
+   fn1().then(res1 =>{
+      console.log(res1);// 1
+      fn2().then(res2 =>{
+        console.log(res2)
+      })
+   })
+}
+```
+改进 
+```js
+const fn = async () =>{
+  const res1 = await fn1();
+  const res2 = await fn2();
+  console.log(res1);// 1
+  console.log(res2);// 2
+}
+```
+
+但是要做并发请求时，还是要用到`Promise.all()`。
+
+如果并发请求时，只要其中一个异步函数处理完成，就返回结果，要用到`Promise.race()`。
+
+## 如何实现自定义指令
+新建 install.js
+```js
+import Vue from 'vue'
+// 自定义指令
+const install = () => {
+  Vue.directive('color', {
+    inserted (el, bind) {
+        console.log(el, bind)
+        el.style.background = bind.value
+    }
+  })
+}
+export default { install }
+
+```
+main.js 中引用一下
+
+```js
+import install from '@/utils/tools/install'
+Vue.use(install)
+
+```
+可以使用啦 
+```html
+<div id="box">
+	<div v-color="'red'">加油，武汉!</div>
+</div>
+```
+* v-empty 缺省图 🌰
+```js
+ <div style="height:500px;width:500px" v-empty="emptyValue"> 自定义指令缺省图</div>
+	data () {
+		return {	
+			emptyValue: {
+				content: '暂无列表',
+				img: require('@/assets/empty.jpg'),
+				visible: true
+			}
+		}
+	}
+```
+新建 empty.js, main.js 中引入即可
+::: details
+```js
+import Vue from 'vue'
+
+const install = () => {
+  Vue.directive('empty', {
+    inserted (el, binding) {
+      console.log(el, binding)
+      el.style.position = el.style.position || 'relative'
+      const { offsetHeight, offsetWidth } = el
+      const { visible, content, img } = binding.value
+      const image = img ? `<img src="${img}" height="30%" width="30%"></img>` : ''
+      const defaultStyle = 'position:absolute;top:0;left:50%;z-index:9999;background:#fff;display:flex;justify-content: center;align-items: center;'
+      const empty = Vue.extend({
+        template: `<div style="height:${offsetHeight}px;width:${offsetWidth}px;${defaultStyle}">
+          <div style="text-align:center">
+            <div>${image}</div>
+            <div>${content || '暂无数据'}</div>
+          </div>
+        </div>`
+      })
+      // eslint-disable-next-line new-cap
+      const component = new empty().$mount().$el
+      if (visible) {
+        el.appendChild(component)
+      } else {
+        el.removeChild(el.lastChild)
+      }
+    }
+  })
+}
+
+export default { install }
+
+```
+:::
+如果有以下报错可以参考： https://blog.csdn.net/xiaomajia029/article/details/88320233
+![Image text](https://img-blog.csdnimg.cn/20190307201606320.png)
+
+* vue.config.js
+```js
+module.exports = {
+  configureWebpack: config => {
+    config.resolve = {
+      extensions: [".js", ".vue", ".json", ".css"],
+      alias: {
+        vue$: "vue/dist/vue.esm.js",
+        "@": resolve("src")
+      }
+    };
+  }
+};
+```
+文本内容复制指令 v-copy
+
+## vuex原理
+
+* Vuex 是通过全局注入store对象，来实现组件间的数据共享，在大型复杂的项目中（多级组件嵌套），需要一个组件更改某个数据，多个组件
+* 自动获取更改后的数据进行业务逻辑处理
+
 ## v-show / v-if 区别
 
 * v-if :	惰性, 如果初次渲染时条件为假 v-if并没有完全销毁，只是成为注释节点,条件不满足时不渲染此节点

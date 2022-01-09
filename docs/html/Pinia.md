@@ -1,7 +1,7 @@
 
 
 # Pinia
-
+* https://pinia.vuejs.org/
 ![Image text](https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/00e7a606213e4b929234ccde1a93a98d~tplv-k3u1fbpfcp-zoom-crop-mark:1304:1304:1304:734.awebp)
 
 * Pinia 是 Vue.js 的轻量级状态管理库，最近很受欢迎。它使用 Vue 3 中的新反应系统来构建一个直观且完全类型化的状态管理库。它允许您跨组件/页面共享状态。 是一个用于 Vue 的状态管理库，类似 Vuex, 是 Vue 的另一种状态管理方案

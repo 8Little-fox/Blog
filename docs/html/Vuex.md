@@ -6,6 +6,8 @@
 * commit 提交一个 名字为`personParameter` 的数据改变
 * mutation 感知到提交的  `personParameter`改变，执行personParameter方法改变数据
 
+![Image text](https://imgconvert.csdnimg.cn/aHR0cHM6Ly91c2VyLWdvbGQtY2RuLnhpdHUuaW8vMjAxOS85LzIyLzE2ZDU3YTUxMDFhMGQ5MmY?x-oss-process=image/format,png)
+
 异步 
 ```js
 const store = new Vuex.Store({

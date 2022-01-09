@@ -574,8 +574,10 @@ export function regexpCheck(mode) {
 	}
 }
 ```
-## 函数递归之数组扁平化
+## Array.prototype.flat
+* 函数递归之数组扁平化 
 ```js
+// 这种不太优雅
 const arr = [1, [2, [3, [4, 5]]], 6];
 const items = []
 const fn = arr => {
@@ -588,6 +590,18 @@ const fn = arr => {
   }
 }
 console.log(items) //[ 1, 2, 3, 4, 5, 6 ]
+
+
+该flat()方法创建一个新数组，其中所有子数组元素以递归方式连接到指定深度
+全局属性 Infinity 是一个数值，表示无穷大。
+const deps = {
+    '采购部':[1,2,3],
+    '人事部':[5,8,12],
+    '行政部':[5,14,79],
+    '运输部':[3,64,105],
+}
+let member = Object.values(deps).flat(Infinity); // [1,   2,  3,  5, 8,12,   5, 14, 79, 3,64, 105]
+
 ```
 
 ## 数组常用运算
@@ -726,5 +740,25 @@ console.log(bool+num) // 9
 console.log(undefined+1) // NaN
 console.log(null+1) // 1
 
+
+```
+
+## 检查元素类型 
+```js
+const checkType = v => v === undefined ? 'undefined' : v === null ? 'null' : v.constructor.name.toLowerCase();
+checkType(true) // boolean
+```
+
+## 计算数组中元素出现的次数
+
+```js
+const countOccurrences = (arr, val) => arr.reduce((pre, cur) => cur === val ? pre+1 : pre, 0)
+countOccurrences([1,2,2,4,5,6,2], 2) // 3
+```
+
+## 从html 中获取内容
+```js
+const getTextInHTML = html => (new DOMParser().parseFromString(html, 'text/html')).body.textContent || '';
+getTextInHTML('<h2>Hello World</h2>'); /*'Hello World'*/
 
 ```
