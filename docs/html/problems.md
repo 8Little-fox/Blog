@@ -93,6 +93,9 @@
 2 解决跨项目服用问题，避免代码重复开发
 3 统一代码质量，可以在快速开发的同时保证代码质量
 
+## ES6里promise解决了什么问题?
+* 解决回调地狱问题
+* anysc await 其实本质是promise.then的执行结果；但是其更完美的体现了异步任务同步执行的形式
 ## Promise.all（只要失败一个就不会走then）的解决方案
 * 解决： 在catch里面resolve就行了
 ```js
@@ -165,6 +168,89 @@ const fn = async () =>{
 
 如果并发请求时，只要其中一个异步函数处理完成，就返回结果，要用到`Promise.race()`。
 
+
+## 如何将扁平数据结构转Tree
+
+```js
+let arr = [
+  {id: 1, name: '部门1', pid: 0},
+  {id: 2, name: '部门2', pid: 1},
+  {id: 3, name: '部门3', pid: 2},
+  {id: 4, name: '部门4', pid: 3},
+  {id: 5, name: '部门5', pid: 4},
+]
+```
+* 不考虑性能实现，递归遍历查找
+* 主要思路是提供一个递getChildren的方法，该方法递归去查找子集
+
+```js
+/**
+ * 递归查找，获取children
+ */
+ const getChildren = (data, result, pid) => {
+  for (const item of data) {
+    if (item.pid === pid) {
+      const newItem = {...item, children: []};
+      result.push(newItem);
+      getChildren(data, newItem.children, item.id);
+    }
+  }
+}
+
+/**
+* 转换方法
+*/
+const arrayToTree = (data, pid) => {
+  const result = [];
+  getChildren(data, result, pid)
+  console.log('result', JSON.stringify(result));
+  return result;
+}
+
+arr.map((item, index) => {
+  arrayToTree(arr, index)
+})
+```
+
+* 不用递归，也能搞定
+* 主要思路也是先把数据转成Map去存储，之后遍历的同时借助对象的引用，直接从Map找对应的数据做存储。不同点在遍历的时候即做Map存储,有找对应关系。性能会更好。
+
+```js
+function arrayToTree(items) {
+  const result = [];   // 存放结果集
+  const itemMap = {};  // 
+  for (const item of items) {
+    const id = item.id;
+    const pid = item.pid;
+
+    if (!itemMap[id]) {
+      itemMap[id] = {
+        children: [],
+      }
+    }
+
+    itemMap[id] = {
+      ...item,
+      children: itemMap[id]['children']
+    }
+
+    const treeItem =  itemMap[id];
+
+    if (pid === 0) {
+      result.push(treeItem);
+    } else {
+      if (!itemMap[pid]) {
+        itemMap[pid] = {
+          children: [],
+        }
+      }
+      itemMap[pid].children.push(treeItem)
+    }
+
+  }
+  return result;
+}
+```
 ## 如何实现自定义指令
 新建 install.js
 ```js
@@ -263,6 +349,15 @@ module.exports = {
 ```
 文本内容复制指令 v-copy
 
+## 网页url 组成部分
+
+```js 
+location.protocal // http: 协议
+location.hostname // 127.0.0.1 主机名
+location.host   
+location.port //端口号
+location.origin // 域名 
+```
 ## vuex原理
 
 * Vuex 是通过全局注入store对象，来实现组件间的数据共享，在大型复杂的项目中（多级组件嵌套），需要一个组件更改某个数据，多个组件
