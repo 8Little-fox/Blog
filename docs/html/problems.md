@@ -18,7 +18,7 @@
 	初次加载耗时多，SEO难度较大（所有的内容都在一个页面中动态替换显示）
 
 	## 你都做过哪些Vue的性能优化？
-	* 尽量减少data中的数据， data 中的数据会增加getter/setter,会手机对于的watcher
+	* 尽量减少data中的数据， data 中的数据会增加getter/setter,会收集对应的watcher
 	* v-if / v-for 不能连用, vue3.x中 if优先级高于for
 	* 在更多的情况下，使用v-if替代v-show
 	* SPA 页面采用keep-alive缓存组件
@@ -436,8 +436,11 @@ mounted(){
 }
 ```
 
+## template 上可以使用v-show渲染嘛？
+
 ```js
- <template> 不属于标签 在其上边v-show 是不行的
+ 答： 不行的
+ v-show是通过display: none 渲染的，但是 template在解析后是虚拟DOM, 不会显示在页面上
 ```
 
 ## 按+操作符的转换规则，
