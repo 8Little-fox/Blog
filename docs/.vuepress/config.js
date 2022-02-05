@@ -10,17 +10,19 @@ module.exports = {
   base: '/blog/',
   themeConfig: {
     nav: [
-      { text: '首页', link: '/' }
+      { text: '首页', link: '/' },
+      { text: 'Gitee', link: 'https://gitee.com/ll3462540450/projects' },
     ],
     sidebar: {
       '/html': [
         {
           title: '前端基础知识',
-          collapsable: true,
+          collapsable: false,
           children: [
             'html/problems',
             'html/es',
             'html/tools',
+            'html/explorer',
             'html/vue',
             'html/vue3.0',
             'html/Vuex',
@@ -28,9 +30,9 @@ module.exports = {
             'html/test',
             'html/git',
             // 'html/iptForm',
-            'html/uniapp'
+            'html/uniapp',
           ]
-        }
+        },
       ]
     }
   }

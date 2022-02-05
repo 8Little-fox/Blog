@@ -390,13 +390,6 @@ location.origin // 域名
 sessionStore 只在当前会话中存在离开就会清楚
 cookie 浏览器中存在，后期可以设置清楚时间，会跟随请求携带请求头
 
-## Get post区别
-* 名字区别
-* 缓存，get方法会被浏览器缓存，留下历史记录，参数get 拼接的url 不太安全，post 放在请求体中
-
-## 为什么https 更安全
-* https 在传输的过程中经过了一层加密/tsl安全层，http属于明文传输
-
 ## 行内元素转为块级元素的方法
 * display, float , position. display:inline-block强制转为块级元素
 
