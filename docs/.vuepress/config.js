@@ -12,6 +12,7 @@ module.exports = {
     nav: [
       { text: '首页', link: '/' },
       { text: 'Gitee', link: 'https://gitee.com/ll3462540450/projects' },
+      { text: 'GitHub', link: 'https://github.com/8Little-fox/Blog' },
     ],
     sidebar: {
       '/html': [
@@ -29,6 +30,7 @@ module.exports = {
             'html/Pinia',
             'html/test',
             'html/git',
+            'html/node',
             // 'html/iptForm',
             'html/uniapp',
           ]

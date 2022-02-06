@@ -1,5 +1,11 @@
 # 前端面试题
 
+## css盒模型
+content + padding + border + margin
+
+正常盒模型 ： box-sizing: content-box - width: width+ 左右border + 左右padding
+
+怪异盒模型： box-sizing: border-box
 ## MVVM
 * MVVM是`Model-View-ViewModel` 缩写，Model层代表数据模型，View代表UI组件， ViewModel是View 和Model 的桥梁，数据会绑定到ViewModel层并自动将数据渲染到页面中，视图变化的时候会通知viewMode层更新数据
 
@@ -32,6 +38,12 @@
 * `location.hash` 的值实际就是在URL 中的 `#` 后面的东西
 * history 主要有 `history.pushState()` 和 `history.replaceState()`
 
+## v-if和v-for哪个优先级更高
+* v-for 优先于v-if 被解析 先执行循环在判断条件
+<!-- ::: tip 通常有两种情况下导致我们这样做：
+  为了过滤列表中的项目 (比如 v-for="user in users" v-if="user.isActive")。此时定义一个计算属性 (比如 activeUsers)，让其返回过滤后的列表即可。
+  为了避免渲染本应该被隐藏的列表 (比如 v-for="user in users" v-if="shouldShowUsers")。此时把 v-if 移动至容器元素上 (比如 ul、ol)即可。
+::: -->
 ## $router和$route 区别
 
 * this.$router 是Vue Router 的实例方法，当导航到不同的url 时可以使用 `this.$router.push()`,这个方法会向`history`
@@ -367,7 +379,8 @@ location.origin // 域名
 
 * v-if :	惰性, 如果初次渲染时条件为假 v-if并没有完全销毁，只是成为注释节点,条件不满足时不渲染此节点
 
-* v-show : display:none 将对应节点隐藏
+* v-show : display:none 将对应节点隐藏,不占用空间
+  visibility: hidden 相当于opacity = 0 ,占用空间
 
 ## 0.1 + 0.2 !== 0.3 
 
