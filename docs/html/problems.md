@@ -5,7 +5,12 @@ content + padding + border + margin
 
 正常盒模型 ： box-sizing: content-box - width: width+ 左右border + 左右padding
 
-怪异盒模型： box-sizing: border-box
+怪异盒模型： box-sizing: border-box 元素指定的任何内边距和边框都将在已设定的宽度和高度内进行绘制
+
+## scrollWidth、offsetWidth、clientWidth
+* scrollWidth  实际宽度
+* offsetWidth width+padding+border
+* clientWidth width+padding
 ## MVVM
 * MVVM是`Model-View-ViewModel` 缩写，Model层代表数据模型，View代表UI组件， ViewModel是View 和Model 的桥梁，数据会绑定到ViewModel层并自动将数据渲染到页面中，视图变化的时候会通知viewMode层更新数据
 
@@ -40,10 +45,12 @@ content + padding + border + margin
 
 ## v-if和v-for哪个优先级更高
 * v-for 优先于v-if 被解析 先执行循环在判断条件
-<!-- ::: tip 通常有两种情况下导致我们这样做：
-  为了过滤列表中的项目 (比如 v-for="user in users" v-if="user.isActive")。此时定义一个计算属性 (比如 activeUsers)，让其返回过滤后的列表即可。
-  为了避免渲染本应该被隐藏的列表 (比如 v-for="user in users" v-if="shouldShowUsers")。此时把 v-if 移动至容器元素上 (比如 ul、ol)即可。
-::: -->
+
+通常有两种情况下导致我们这样做：
+
+ 1: 为了过滤列表中的项目 (比如 v-for="user in users" v-if="user.isActive")。此时定义一个计算属性 (比如 activeUsers)，让其返回过滤后的列表即可。
+
+ 2: 为了避免渲染本应该被隐藏的列表 (比如 v-for="user in users" v-if="shouldShowUsers")。此时把 v-if 移动至容器元素上 (比如 ul、ol)即可。
 ## $router和$route 区别
 
 * this.$router 是Vue Router 的实例方法，当导航到不同的url 时可以使用 `this.$router.push()`,这个方法会向`history`
@@ -138,6 +145,23 @@ async/await是写异步代码的新方式
 async/await是基于Promise实现的，它不能用于普通的回调函数。
 async/await与Promise一样，是非阻塞的。
 async/await使得异步代码看起来像同步代码，这正是它的魔力所在。
+
+## 用Promise 对fetchData 进行封装，将回调的设计封装成then 的形式
+```js
+function fetchData(callback) {
+  setTimeout(() => {
+    callback('返回的数据')
+  }, 2000)
+}
+function promiseFetch() {
+  return new Promise(resolve => {
+    fetchData(resolve)
+  })
+}
+promiseFetch().then(res => {
+  console.log(res); //返回的数据
+})
+```
 ## 关于异步函数的吐槽
 异步函数很常见，经常是用 Promise 来实现
 

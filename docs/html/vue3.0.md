@@ -1,5 +1,8 @@
 # Vue 3.0
 
+## Vue3.x 推荐使用哪些插件呢？ 都有什么好处
+* Vuex -> Pinia  极轻， 仅有 1 KB
+* EventBus -> Mitt 足够小，仅有200bytes
 ## Vue3.x响应式数据原理
 * Vue3.x改用 `Proxy` 替代 ObjjectdefineProperty. 因为Proxy 可以直接监听对象和数组的变化。
 
