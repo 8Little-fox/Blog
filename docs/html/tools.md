@@ -286,3 +286,23 @@ export const get_length = function (str) {
   return realLength;
 };
 ```
+
+## 修改对象中的key ，值不变
+::: tip
+  /**
+   *
+   * @param {*} oldKeys 原始数据 object {id: 'A',name:'张三'}
+   * @param {*} newKeys 要修改的数据 object {id: "序列"}
+   * @returns // {序列: 'A',name:'张三'}
+   */
+:::
+```js
+  export const objKeys = function(oldKeys, newKeys) {
+      var objs = Object.keys(oldKeys).reduce((newData, key) => {
+          let newKey = newKeys[key] || key
+          newData[newKey] = oldKeys[key]
+          return newData
+      }, {})
+      return objs
+  }
+```

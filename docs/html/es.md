@@ -1,5 +1,6 @@
-# Javascript 基础应用
+# Js
 
+## Promise
 ## Array.from()
 
 `Array.from()` 方法就是将一个类数组对象或者可遍历对象转换成一个真正的数组
