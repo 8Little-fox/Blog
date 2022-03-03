@@ -305,4 +305,61 @@ export const get_length = function (str) {
       }, {})
       return objs
   }
+
+```
+
+## 颜色值转换
+```js
+  class Common {
+  /**
+   * rgba 转 hex
+   * @param {*} color
+   * @returns
+   */
+    static colorRGB2Hex (color) {
+      if(!color) {
+        return '';
+      }
+      if(!/^rgb/.test(color)) {
+        return color
+      }
+      var rgb = color.split(',');
+      var r = parseInt(rgb[0].split('(')[1]);
+      var g = parseInt(rgb[1]);
+      var b = parseInt(rgb[2].split(')')[0]);
+      var hex = "#" + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
+      return hex;
+    }
+      /**
+   *
+   * @param {*} _color hex #343434
+   * @param {*} _opacity 透明度 0.5
+   * @returns rgba(24,33,42,0.5)
+   */
+    static hexToRGBA(_color, _opacity){
+      var sColor = _color.toLowerCase();
+      //十六进制颜色值的正则表达式
+      var reg = /^#([0-9a-fA-f]{3}|[0-9a-fA-f]{6})$/;
+      // 如果是16进制颜色
+      if (sColor && reg.test(sColor)) {
+        if (sColor.length === 4) {
+          var sColorNew = "#";
+          for (var i = 1; i < 4; i += 1) {
+            sColorNew += sColor.slice(i, i + 1).concat(sColor.slice(i, i + 1));
+          }
+          sColor = sColorNew;
+        }
+        //处理六位的颜色值
+        var sColorChange = [];
+        for (var i = 1; i < 7; i += 2) {
+          sColorChange.push(parseInt("0x" + sColor.slice(i, i + 2)));
+        }
+        return "rgba(" + sColorChange.join(",") + "," + _opacity + ")";
+      }
+      return sColor;
+    }
+  }
+export default Common
+
+Common.hexToRGBA('#343434', 0.5)
 ```
