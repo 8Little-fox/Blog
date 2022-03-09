@@ -33,6 +33,7 @@ module.exports = {
             'html/node',
             // 'html/iptForm',
             'html/uniapp',
+            'html/projectReplay',
           ]
         },
       ]

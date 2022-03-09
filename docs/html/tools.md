@@ -363,3 +363,11 @@ export default Common
 
 Common.hexToRGBA('#343434', 0.5)
 ```
+
+## 每三位添加一个逗号
+```js
+function format(number) {
+  return number && number.toString().replace(/(?!^)(?=(\d{3})+\.)/g, ",");
+}
+console.log(format(12000000.11)); // 12,000,000.11
+```
