@@ -21,6 +21,7 @@ module.exports = {
           collapsable: false,
           children: [
             'html/problems',
+            'html/wx',
             'html/es',
             'html/tools',
             'html/explorer',

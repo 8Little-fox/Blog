@@ -80,7 +80,7 @@ export function throttle (func, wait, type) {
 }
 ```
 
-## queryString
+## 从 URL 获取查询参数
 
 获取参数
 ```js
@@ -95,9 +95,9 @@ const queryString = function (){
         // result[key] = value
     })
     console.log(result); //{ name: '123', phone: '234' }
-
 }
 queryString()
+
 ```
 ```js
 function getQueryString() {
@@ -115,7 +115,20 @@ function getQueryString() {
 };
 getQueryString()  //upload_pic_200017-16228080178825.jpg
 ```
-
+```js
+const getParameters = (URL) => {
+  URL = JSON.parse(
+    '{"' +
+      decodeURI(URL.split("?")[1])
+        .replace(/"/g, '\\"')
+        .replace(/&/g, '","')
+        .replace(/=/g, '":"') +
+      '"}'
+  );
+  return JSON.stringify(URL);
+};
+console.log(getParameters('https://www.questiongorilla.com/#/survey/planet/design?sn=7x833ZYg')); // {"sn":"7x833ZYg"}
+```
 给指定参数名，获取参数值
 
 ```js
