@@ -10,7 +10,7 @@ nVue 基于原生引擎的渲染
 
  1：nVue 页面只能使用 flex 布局，不支持其他布局方式。
 
- 2:原生开发没有页面滚动的概念，页面内容高过屏幕高度并不会自动滚动，只有部分组件可滚动（list、waterfall、scroll-view/scroller），要滚得
+ 2:原生开发没有页面滚动的概念，页面内容高过屏幕高度并不会自动滚动，只有部分组件可滚动（list、waterfall、scroll-view/scroLLer），要滚得
  内容需要套在可滚动组件下
 
  3:文字内容，必须、只能在 <text> 组件下
@@ -60,7 +60,7 @@ nVue 基于原生引擎的渲染
 
 点击按钮或者某个操作，跳转到页面到某个位置上
 > `scroll-view` 必须要设置高度，此处高度获取的是屏幕的高度
-```js
+```html
 <scroll-view :scroll-into-view="active" :style="{ height: scrollView + 'px' }" />
 
 scrollView() {
