@@ -1,16 +1,14 @@
-# uniapp开发小坑
-
-
+# uniApp开发小坑
 # 混合开发 
-##  nvue
-uniapp 嵌入原生
+##  nVue
+uniApp 嵌入原生
 https://nativesupport.dcloud.net.cn/NativePlugin/README 
 
-nvue 基于原生引擎的渲染
+nVue 基于原生引擎的渲染
 
- nvue 注意事项
+ nVue 注意事项
 
- 1：nvue 页面只能使用 flex 布局，不支持其他布局方式。
+ 1：nVue 页面只能使用 flex 布局，不支持其他布局方式。
 
  2:原生开发没有页面滚动的概念，页面内容高过屏幕高度并不会自动滚动，只有部分组件可滚动（list、waterfall、scroll-view/scroller），要滚得
  内容需要套在可滚动组件下
@@ -23,13 +21,13 @@ nvue 基于原生引擎的渲染
 
  6:不支持背景图
 
- 7:在 App.vue 中定义的全局js变量不会在 nvue 页面生效。globalData和vuex是生效的
+ 7:在 App.vue 中定义的全局js变量不会在 nVue 页面生效。globalData和vuex是生效的
 
- 8:目前不支持在 nvue 页面使用 typescript/ts。
+ 8:目前不支持在 nVue 页面使用 typescript/ts。
 
  9:border 不支持简写
 
- 10: nvue 页面中 IOS不支持使用 <b><img> 标签</b> 可以使用 <b><image> 标签</b>
+ 10: nVue 页面中 IOS不支持使用 <b><img> 标签</b> 可以使用 <b><image> 标签</b>
 
  ```js
  /* 错误 */
@@ -86,7 +84,7 @@ scrollView() {
 
 ## 日志打印
 
-uniapp 简直太坑了，当时我做的是 `nvue` 嵌入原生的项目，当时真的要哭了，进入uniapp 页面之后接口也不凋，日志也不打印，
+uniApp 简直太坑了，当时我做的是 `nVue` 嵌入原生的项目，当时真的要哭了，进入uniApp 页面之后接口也不凋，日志也不打印，
 一片白，实在无从下手，查了两个小时，心态崩了，最后把`clear()` 注释掉试试，结果好使了，最后查了一遍文档，文档里面说不支持`clear()`
 
 console / debug / log /info / warn 警告 /error 错误日志 
