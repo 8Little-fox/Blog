@@ -61,7 +61,6 @@ nvue 基于原生引擎的渲染
 ## scroll-view 喵点定位
 
 点击按钮或者某个操作，跳转到页面到某个位置上
-
 > `scroll-view` 必须要设置高度，此处高度获取的是屏幕的高度
 ```js
 <scroll-view :scroll-into-view="active" :style="{ height: scrollView + 'px' }" />
