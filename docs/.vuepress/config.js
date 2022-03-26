@@ -33,7 +33,7 @@ module.exports = {
             'html/git',
             'html/node',
             // 'html/iptForm',
-            'html/uniapp',
+            'html/uniApp',
             'html/projectReplay',
           ]
         },
