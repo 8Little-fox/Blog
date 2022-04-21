@@ -1,4 +1,3 @@
-# uniApp开发小坑
 # 混合开发 
 ##  nVue
 uniApp 嵌入原生
@@ -59,7 +58,7 @@ nVue 基于原生引擎的渲染
 ## scroll-view 喵点定位
 
 点击按钮或者某个操作，跳转到页面到某个位置上
-> `scroll-view` 必须要设置高度，此处高度获取的是屏幕的高度
+* `scroll-view` 必须要设置高度，此处高度获取的是屏幕的高度
 ```html
 <scroll-view :scroll-into-view="active" :style="{ height: scrollView + 'px' }" />
 
@@ -72,7 +71,7 @@ scrollView() {
 <div id="comment"/>
 
 ```
-> 如果节点绑定到某个组件上导致Android 不能拿到节点，ios 是可以的，所以应该把dom节点绑定到 `div` 上
+* 如果节点绑定到某个组件上导致Android 不能拿到节点，ios 是可以的，所以应该把dom节点绑定到 `div` 上
 
 页面渲染完成后在进行指定位置跳转，
 ```js
@@ -80,7 +79,7 @@ scrollView() {
 		this.active = 'comment'
 	}, 900);
 ```
-> 如果不加定时器，容易导致页面高度计算有误
+* 如果不加定时器，容易导致页面高度计算有误
 
 ## 日志打印
 不支持 clear()
