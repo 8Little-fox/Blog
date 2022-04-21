@@ -1,4 +1,4 @@
-# 混合开发 
+<!-- # 混合开发 
 ##  nVue
 uniApp 嵌入原生
 https://nativesupport.dcloud.net.cn/NativePlugin/README 
@@ -82,4 +82,4 @@ scrollView() {
 * 如果不加定时器，容易导致页面高度计算有误
 
 ## 日志打印
-不支持 clear()
+不支持 clear() -->
