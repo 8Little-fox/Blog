@@ -384,3 +384,11 @@ function format(number) {
 }
 console.log(format(12000000.11)); // 12,000,000.11
 ```
+
+```js
+const createLink = (url, params) => {
+  return decodeURIComponent(`${url}&user=${Object.entries(params).map(([key, value]) => `${key}=${value}`).join('&')}`)
+}
+console.log(createLink('https://questiongorilla.com/', {"cid":16,"activity_id":839,"activity_task_id":1160}))
+
+```
