@@ -32,6 +32,7 @@ module.exports = {
             'html/test',
             'html/git',
             'html/node',
+            'html/uniApp',
             // 'html/iptForm',
             'html/projectReplay',
           ]
