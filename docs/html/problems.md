@@ -39,6 +39,19 @@ content + padding + border + margin
 	* 长列表滚动到可视区域动态加载
 	* 图片懒加载
 
+## mixins的混入的策略是什么
+  * mixins 是一种分发vue 组件中可复用功能的非常灵活的方式
+  * mixins 中的data 会合并到data中， 有冲突的话，data中的数据会覆盖mixins 中的数据
+
+  缺点：
+* 1.变量来源不明确（隐式传入），不利于阅读，使代码变得难以维护
+* 2.多个mixins的生命周期会融合到一起运行，但是同名属性、同名方法无法融合，可能会导致冲突或覆盖
+
+## hooks 对比mixins的优势是什么
+* hooks 把setup 函数在使用 Composition API （组合式api）进行了封装
+* mixin中的变量和方法是隐式引入，在一个组件中如果引用多个mixin，变量的来源会变得错综复杂，需要我们自己手动调试，才知道数据来源。
+* 而使用Hook引入变量和方法是显示传入，能清楚的知道变量和方法的数据来源。 在一个组件中使用多个mixin可能会出现，函数和变量重名现象，就会导致冲突或覆盖现象。
+*   而使用Hook函数时，因为变量和函数是显示引用，我们就可以通过解构赋值，来避免函数和变量重名现象。
 ## hash 路由和history 路由实现原理
 * `location.hash` 的值实际就是在URL 中的 `#` 后面的东西
 * history 主要有 `history.pushState()` 和 `history.replaceState()`
