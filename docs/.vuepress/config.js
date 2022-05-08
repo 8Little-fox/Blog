@@ -29,7 +29,7 @@ module.exports = {
             'html/vue3.0',
             'html/Vuex',
             'html/Pinia',
-            'html/test',
+            'html/refactor',
             'html/git',
             'html/node',
             // 'html/uni',

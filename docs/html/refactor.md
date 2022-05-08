@@ -714,3 +714,66 @@ handlerBtn(val) {
     color: #ffffff;
   }
 ```
+
+# 循环拼数据
+原代码
+```js
+	<view v-if="item.task_id === 1">
+		{{ ['', '一次性', '不限次', '每天'][item.cycle] }}邀请
+		<span class="color-f">{{ item.help_num }}位</span>好友成功助力，即可完成该任务，完成任务可获得
+	</view>
+	<view v-if="item.task_id === 2 || item.task_id === 3">
+		{{ ['', '一次性', '不限次', '每天'][item.cycle] }}浏览宣广告
+		<span class="color-f">{{ item.time_num }}秒</span>以上，即可完成该任务，
+	</view>
+	<view v-if="item.task_id === 4">
+		{{ ['', '一次性', '不限次', '每天'][item.cycle] }}答完问卷中的问题即可完成该任务获得
+		<span class="color-f">{{ item.reward_number }}次</span>抽奖机会
+	</view>
+```
+优化后代码
+```js
+function task(){
+	const timeArr = ['一次性', '不限次', '每天'];
+	const timerConfig = {
+		1: {
+			baseTitle: '邀请',
+			unitKey: 'help_num',
+			unit: '位',
+			tips: '好友成功助力，即可完成该任务，完成任务可获得',
+			unitKey2: 'reward_number',
+			unit2: '次',
+			tips2: '抽奖机会',
+		},
+		2: {
+			baseTitle: '浏览宣广告',
+			unitKey: 'time_num',
+			unit: '秒',
+			tips: '以上，即可完成该任务',
+			unitKey2: 'reward_number',
+			unit2: '次',
+			tips2: '抽奖机会',
+		},
+		4: {
+			baseTitle: '答完问卷中的问题即可完成该任务获得',
+			unitKey: 'reward_number',
+			unit: '次',
+			tips: '抽奖机会',
+		},
+	};
+	this.taskData = data.map((item) => {
+	const { task_id, cycle, status } = item;
+	const configTask = timerConfig[task_id === 3 ? 2 : task_id];
+	return {
+		...item,
+		taskConfig: {
+			statusOfTime: `${timeArr[cycle - 1]}${configTask.baseTitle}`,
+			unit: `${item[configTask.unitKey]}${configTask.unit}`,
+			tips: configTask.tips,
+			unit2: `${item[configTask.unitKey2]}${configTask.unit2}`,
+			tips2: configTask.tips2,
+		},
+	};
+});
+}
+```
