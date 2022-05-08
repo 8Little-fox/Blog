@@ -405,34 +405,6 @@ order_tatus(){
 
 修改前
 ```js
-<div style="">
-	<text style="font-size: 30rpx;color: #666666;margin-top: 33rpx;">1.每邀请一位好友注册成为云自驾</text>
-	<text style="font-size: 30rpx;color: #666666;padding-left: 15rpx;">APP新用户，即可获得现金奖励。</text>
-	<text style="font-size: 30rpx;color: #666666;margin-top: 33rpx;">2.现金奖励可以在钱包进行提现。</text>
-	<text style="font-size: 30rpx;color: #666666;margin-top: 33rpx;">3.最终解释权归云自驾APP所有。</text>
-</div>
-```
-修改后
-
-```js
-<div style="" v-for="item of list" :key="item">
-	<text style="font-size: 30rpx;color: #666666;" :style="item.style">{{item.value}}</text>
-</div>
-
-computed:{
-	list(){
-		const MARGIN_TOP = { marginTop : '33rpx' }
-			return [
-				{value : '1.每邀请一位好友注册成为云自驾' , style:MARGIN_TOP},
-				{value : 'APP新用户，即可获得现金奖励。' , style:{paddingLeft: '15rpx'}},
-				{value : '2.现金奖励可以在钱包进行提现。' , style:MARGIN_TOP},
-				{value : '3.最终解释权归云自驾APP所有。' , style:MARGIN_TOP}
-			]
-		}
-	}
-```
-修改前
-```js
 		:style="{
 				width: widthPx + 'px',
 				height: widthPx + 'px',
@@ -615,36 +587,7 @@ const slotsScoped = (slots || dict) && {
 }
 ```
 
-修改前
-```js
-if('请选择其中一项') {
- wx.showToast({
-				title,
-				icon: 'none'
-		})
-}
-if('请输入您的答案') {
- wx.showToast({
-				title,
-				icon: 'none'
-		})
-}
-```
 
-修改后
-type 对应的是 1，2，3
-```js
-	if ('判断条件') {
-			return wx.showToast({
-					title: {
-							1: '请选择其中一项',
-							2: `请选择${config && config?.option_number?.min}～${config && config?.option_number?.max}项`,
-							3: '请输入您的答案',
-					} [type],
-					icon: 'none'
-			})
-	}
-```
 
 ## Vuex存省市区
 
@@ -715,7 +658,7 @@ handlerBtn(val) {
   }
 ```
 
-# 循环拼数据
+## 数据结构改造
 原代码
 ```js
 	<view v-if="item.task_id === 1">
@@ -776,4 +719,64 @@ function task(){
 	};
 });
 }
+```
+
+修改前
+```js
+<div style="">
+	<text style="font-size: 30rpx;color: #666666;margin-top: 33rpx;">1.每邀请一位好友注册成为云自驾</text>
+	<text style="font-size: 30rpx;color: #666666;padding-left: 15rpx;">APP新用户，即可获得现金奖励。</text>
+	<text style="font-size: 30rpx;color: #666666;margin-top: 33rpx;">2.现金奖励可以在钱包进行提现。</text>
+	<text style="font-size: 30rpx;color: #666666;margin-top: 33rpx;">3.最终解释权归云自驾APP所有。</text>
+</div>
+```
+修改后
+
+```js
+<div style="" v-for="item of list" :key="item">
+	<text style="font-size: 30rpx;color: #666666;" :style="item.style">{{item.value}}</text>
+</div>
+
+computed:{
+	list(){
+		const MARGIN_TOP = { marginTop : '33rpx' }
+			return [
+				{value : '1.每邀请一位好友注册成为云自驾' , style:MARGIN_TOP},
+				{value : 'APP新用户，即可获得现金奖励。' , style:{paddingLeft: '15rpx'}},
+				{value : '2.现金奖励可以在钱包进行提现。' , style:MARGIN_TOP},
+				{value : '3.最终解释权归云自驾APP所有。' , style:MARGIN_TOP}
+			]
+		}
+	}
+```
+
+修改前
+```js
+if('请选择其中一项') {
+ wx.showToast({
+	title,
+	icon: 'none'
+	})
+}
+if('请输入您的答案') {
+ wx.showToast({
+		title,
+		icon: 'none'
+	})
+}
+```
+
+修改后
+type 对应的是 1，2，3
+```js
+	if ('判断条件') {
+		return wx.showToast({
+			title: {
+					1: '请选择其中一项',
+					2: `请选择${config && config?.option_number?.min}～${config && config?.option_number?.max}项`,
+					3: '请输入您的答案',
+			} [type],
+			icon: 'none'
+		})
+	}
 ```
