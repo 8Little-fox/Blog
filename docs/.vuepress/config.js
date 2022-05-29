@@ -32,6 +32,7 @@ module.exports = {
             'html/refactor',
             'html/git',
             'html/node',
+            'html/dayjs',
             // 'html/uni',
             // 'html/iptForm',
             'html/projectReplay',
