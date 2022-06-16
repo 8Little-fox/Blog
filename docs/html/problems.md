@@ -620,7 +620,32 @@ console.log(randomHex());
 //Result: #92b008
 
 ```
+## 将RGB转化为十六机制
+```js
+const rgbToHex = (r, g, b) => "#" + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
 
+rgbToHex(255, 255, 255);  // '#ffffff'
+```
+
+ ## 滚动到页面顶部
+ ```js
+ const goToTop = () => window.scrollTo(0, 0);
+goToTop();
+ ```
+ ## 获取变量的类型
+ ```js
+ const trueTypeOf = (obj) => Object.prototype.toString.call(obj).slice(8, -1).toLowerCase();
+
+trueTypeOf('');     // string
+trueTypeOf(0);      // number
+trueTypeOf();       // undefined
+trueTypeOf(null);   // null
+trueTypeOf({});     // object
+trueTypeOf([]);     // array
+trueTypeOf(0);      // number
+trueTypeOf(() => {});  // function
+
+ ```
 ## 修改富文本中图片的高度
 
 ```html
@@ -647,3 +672,9 @@ console.log(randomHex());
 * 强调文本放在strong或者em标签中，不要用b和i标签；
 * 使用表格table时，标题要用 caption，表头要用 thead，主体部分用 tbody 包围，尾部用 tfoot 包围；
 * 表头用 th，单元格用 td。表单域用filedset包裹，用lengend标签说明表单的用途。input标签通过id属性或for属性与label标签关联。html 语义化，css 类名也要语义化等等。
+
+## 随机字符串
+```js
+const randomString = () => Math.random().toString(36).slice(2);
+randomString();
+```
