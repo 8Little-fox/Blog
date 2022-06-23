@@ -89,3 +89,35 @@ npx eslint --ext .js,.vue src -> npx lint-staged
 时会自动检验代码并将不合规的代码代码进行自动修复:
 
 git cz 
+
+## 云效使用技巧
+* 云效创建一个空项目举个例子： 
+1: 克隆原仓库地址的所有分支 gitLab
+```js
+git clone @gitxxx
+```
+* 查看当前分支
+```
+git branch
+```
+* 查看所有分支
+```
+git branch -all
+```
+2: 首先git remote 删除已添加的远程仓库地址
+* 查看当前配置的远程仓库地址
+```js
+git remote -v  
+```
+* 删除本地指定的远程地址
+```js
+git remote remove origin
+```
+3: 将本地代码推送到云效远程仓库
+```js
+git remote add origin "xxx.git"
+```
+4: 最后一步
+```js
+git push --mirror
+```
